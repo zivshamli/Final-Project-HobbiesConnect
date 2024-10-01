@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Final Project HobbiesConnect</string>
+    <string name="social_name">Hobbies Connect</string>
+    <string name="email_hint">email</string>
+    <string name="password_field_hint">password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+</resources>

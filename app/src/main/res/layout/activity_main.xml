@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/grey_300">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_800"
+        android:gravity="center">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/social_name"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="@dimen/open_title_text_size"
+            android:textColor="@color/white"
+
+            />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+<com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="@dimen/logo_size"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo"
+        android:background="@color/white"
+        android:id="@+id/logo"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay"
+         android:layout_above="@id/email_text_field"
+        android:layout_marginBottom="@dimen/open_top_margin"
+        android:layout_marginTop="@dimen/open_top_margin"
+
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/email_text_field"
+        android:layout_width="@dimen/text_field_width"
+        android:layout_height="@dimen/text_field_height"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/text_size"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="@dimen/open_hor_margin"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password_text_field"
+        android:layout_width="@dimen/text_field_width"
+        android:layout_height="@dimen/text_field_height"
+        android:hint="@string/password_field_hint"
+        android:inputType="textPassword"
+        android:textSize="@dimen/text_size"
+        android:background="@color/white"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:textColorHint="@color/black"
+        android:layout_marginHorizontal="@dimen/open_hor_margin"
+        android:layout_below="@id/email_text_field"/>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:text="@string/login"
+        android:textSize="@dimen/text_size"
+        android:backgroundTint="@color/blue_800"
+        android:textColor="@color/white"
+        android:layout_below="@id/password_text_field"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:text="@string/sign_up"
+        android:textSize="@dimen/text_size"
+        android:backgroundTint="@color/blue_800"
+        android:textColor="@color/white"
+        android:layout_below="@id/login_BTN"/>
+
+
+
+
+
+</RelativeLayout>
