@@ -12,3 +12,9 @@ HobbiesConnect is a social network that helps you find friends based on shared h
 
 ## Icon  
 ![HobbiesConnect Icon](https://raw.githubusercontent.com/zivshamli/Final-Project-HobbiesConnect/refs/heads/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp)
+
+
+## Login Screen  
+The login screen allows users to sign in with their existing account credentials or register for a new account. It includes input fields for email and password and user registration.
+
+![HobbiesConnect Login Screen](https://github.com/zivshamli/Final-Project-HobbiesConnect/blob/master/app/src/main/res/layout/activity_main.xml)
