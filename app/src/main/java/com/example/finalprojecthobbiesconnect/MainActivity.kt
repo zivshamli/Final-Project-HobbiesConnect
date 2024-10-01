@@ -3,6 +3,7 @@ package com.example.finalprojecthobbiesconnect
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -46,17 +47,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkTextFields():Boolean {
         if (emailTextField.text.toString().isEmpty() && passwordTextField.text.toString().isEmpty()) {
-            SignalManager.getInstance().vibrateAndToast("email and password missing!")
+            SignalManager.getInstance().vibrateAndToast(Constants.ALRET1)
             return false
         }
 
        else if (emailTextField.text.toString().isEmpty() ) {
-            SignalManager.getInstance().vibrateAndToast("email missing!")
+            SignalManager.getInstance().vibrateAndToast(Constants.ALRET2)
             return false
 
         }
         else if (passwordTextField.text.toString().isEmpty()) {
-            SignalManager.getInstance().vibrateAndToast("password missing!")
+            SignalManager.getInstance().vibrateAndToast(Constants.ALRET3)
             return false
         }
         return true
