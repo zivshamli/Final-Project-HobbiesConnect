@@ -92,7 +92,8 @@
         android:textSize="@dimen/text_size"
         android:backgroundTint="@color/blue_800"
         android:textColor="@color/white"
-        android:layout_below="@id/login_BTN"/>
+        android:layout_below="@id/login_BTN"
+        android:id="@+id/sign_up_BTN"/>
 
 
 
