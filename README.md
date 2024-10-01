@@ -11,4 +11,4 @@ HobbiesConnect is a social network that helps you find friends based on shared h
 
 
 ## Icon  
-![HobbiesConnect Icon]()
+![HobbiesConnect Icon](https://raw.githubusercontent.com/zivshamli/Final-Project-HobbiesConnect/refs/heads/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp)
