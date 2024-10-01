@@ -7,9 +7,9 @@ class Constants {
         const val ALRET3 :String ="password missing!"
 
           val HOBBIES_LIST :List<String> =arrayListOf("Gaming", "Reading",
-             "Cycling","Basketball","Football","Tennis","Hiking","Painting",
+             "Cycling","Basketball","Soccer","Tennis","Hiking","Painting",
              "Food","Movies","Catan","Skating","Surfing","Yoga","Netflix & Chill",
-             "Chess","Music","Dancing","Running","Bowling","Archery","Fishing","FIFA"
+             "Chess","Music","Dancing","Running","Bowling","Archery","Fishing","FIFA","Pool","Camping"
          )
 
     }
