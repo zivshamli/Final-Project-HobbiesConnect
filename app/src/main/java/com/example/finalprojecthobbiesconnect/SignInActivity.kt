@@ -1,11 +1,21 @@
 package com.example.finalprojecthobbiesconnect
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.Manifest.permission.READ_MEDIA_VIDEO
+import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -28,6 +38,9 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var uploadPhotoBTN: MaterialButton
     private lateinit var myHobbiesText: MaterialTextView
 
+
+
+
     private var selectedHobbies: MutableList<String> = mutableListOf()
     private var selectedYear : Int = 0
     private var username:String = ""
@@ -40,7 +53,32 @@ class SignInActivity : AppCompatActivity() {
     private var chatList: MutableList<String> = mutableListOf()
 
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            openGallery()
+        } else {
+            SignalManager.getInstance().vibrateAndToast("Permission denied")
+        }
+    }
 
+    private val requestGalleryLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data: Intent? = result.data
+            val selectedImageUri: Uri? = data?.data
+            selectedImageUri?.let {
+                handleImageSelected(it)
+            }
+        }
+    }
+
+    private fun handleImageSelected(it: Uri) {
+        ImageLoader.getInstance().load(it, profilePhoto)
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,8 +107,11 @@ class SignInActivity : AppCompatActivity() {
     private fun initViews() {
         initYearSpinner()
         initHobbiesChipGroup()
+        initUploadPhotoBTN()
         initSaveBTN()
     }
+
+
 
     private fun initSaveBTN() {
         saveBTN.setOnClickListener {saveUser()}
@@ -138,6 +179,58 @@ class SignInActivity : AppCompatActivity() {
 
         }
     }
+    private fun initUploadPhotoBTN() {
+        uploadPhotoBTN.setOnClickListener{uploadPhoto()}
+    }
+
+    private fun uploadPhoto() {
+        requestStoragePermission()
+        if (isPermissionGranted()) {
+            openGallery()
+        }
+    }
+
+    private fun openGallery() {
+
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+        requestGalleryLauncher.launch(intent)
+
+
+    }
+    private fun isPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            ContextCompat.checkSelfPermission(
+                this,
+                READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            ContextCompat.checkSelfPermission(
+                this,
+                READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+
+
+
+    private fun requestStoragePermission() {
+
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
+} else {
+    requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+}
+
+
+
+
+    }
+
+
+
 
     private fun refreshMyHobbiesText() {
         myHobbiesText.text = buildString {

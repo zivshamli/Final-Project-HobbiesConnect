@@ -2,6 +2,7 @@ package com.example.finalprojecthobbiesconnect.utilties
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.finalprojecthobbiesconnect.R
@@ -27,6 +28,21 @@ class ImageLoader private constructor(context: Context) {
 
     fun load(
         source: String,
+        imageView: ImageView,
+        placeholder: Int = R.drawable.avatar
+    ) {
+        contextRef.get()?.let { context ->
+            Glide
+                .with(context)
+                .load(source)
+                .placeholder(placeholder)
+                .centerCrop()
+                .into(imageView)
+        }
+    }
+    // New method: Loading from Uri (e.g., gallery image)
+    fun load(
+        source: Uri,
         imageView: ImageView,
         placeholder: Int = R.drawable.avatar
     ) {
