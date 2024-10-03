@@ -1,10 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity">
+    tools:context=".SignInActivity"
+    android:background="@color/grey_300">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue_800"
+            android:gravity="center">
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in_title"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/open_title_text_size"
+                android:textColor="@color/white"
+
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/logo_size"
+            android:layout_height="@dimen/logo_size"
+            android:src="@drawable/avatar"
+            android:layout_above="@id/upload_photo_BTN"
+            android:background="@color/grey_300"
+            app:civ_circle_background_color="@color/white"
+            android:id="@+id/profile_photo"
+            android:layout_marginTop="@dimen/profile_top_margin"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/upload_photo_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/blue_800"
+        android:layout_above="@id/name_text_field"
+        android:text="@string/upload_photo"
+        android:textSize="@dimen/text_size_small"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/name_text_field"
+           android:layout_width="300dp"
+           android:layout_height="@dimen/text_field_height"
+           android:hint="@string/name_hint"
+           android:inputType="textPersonName"
+           android:textSize="@dimen/text_size"
+           android:background="@color/white"
+
+              android:textAlignment="center"
+             android:layout_marginTop="@dimen/open_top_margin"
+            android:textColorHint="@color/black"
+             android:layout_gravity="center"
+
+        />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/sign_up_email_text_field"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/text_field_height"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/text_size"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:textColorHint="@color/black"
+        android:layout_below="@id/name_text_field"
+        android:layout_marginHorizontal="@dimen/open_hor_margin"
+        android:layout_gravity="center"
+        />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/sign_up_password_text_field"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/text_field_height"
+        android:hint="@string/password_field_hint"
+        android:inputType="textPassword"
+        android:textSize="@dimen/text_size"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:textColorHint="@color/black"
+        android:layout_below="@id/sign_up_email_text_field"
+        android:layout_marginHorizontal="@dimen/open_hor_margin"
+        android:layout_gravity="center"
+        />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/confirm_password_text_field"
+        android:layout_width="300dp"
+        android:layout_height="@dimen/text_field_height"
+        android:hint="@string/confirm_password_field_hint"
+        android:inputType="textPassword"
+        android:textSize="@dimen/text_size"
+        android:background="@color/white"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/open_top_margin"
+        android:textColorHint="@color/black"
+        android:layout_below="@id/sign_up_password_text_field"
+        android:layout_marginHorizontal="@dimen/open_hor_margin"
+        android:layout_gravity="center"
+        />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_up_year_picker_text"
+            android:text="@string/insert_year_of_birth"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/blue_800"
+            android:textSize="@dimen/text_size"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/open_top_margin"
+            android:layout_below="@id/confirm_password_text_field"/>
+       <Spinner
+           android:id="@+id/sign_up_year_picker"
+           android:layout_width="wrap_content"
+           android:layout_height="48dp"
+           android:layout_gravity="center"
+           android:layout_below="@id/sign_up_year_picker_text"
+           android:layout_marginTop="@dimen/open_top_margin"
+           android:background="@color/white"
+
+           />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sign_up_choose_hobbies_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_hobbies"
+            android:gravity="center"
+            android:layout_below="@id/sign_up_year_picker"
+            android:layout_marginTop="@dimen/open_top_margin"
+            android:textColor="@color/blue_800"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size"
+            android:layout_gravity="center"
+            />
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/sign_up_chip_group_hobbies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sign_up_choose_hobbies_text"
+            android:layout_marginTop="@dimen/open_top_margin"
+            android:layout_marginHorizontal="@dimen/hor_margin_hobbies">
+
+        </com.google.android.material.chip.ChipGroup>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/my_hobbies_text"
+            tools:text="My hobbies: "
+            android:gravity="center"
+            android:layout_below="@id/sign_up_chip_group_hobbies"
+            android:layout_marginTop="@dimen/top_margin_small"
+            android:textColor="@color/blue_800"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_BTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/open_top_margin"
+            android:text="@string/save"
+            android:textSize="@dimen/text_size"
+            android:backgroundTint="@color/blue_800"
+            android:textColor="@color/white"
+            android:layout_below="@id/my_hobbies_text"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/open_top_margin"/>
+
+
+
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+
+
+
+
+
+
+</ScrollView>
+

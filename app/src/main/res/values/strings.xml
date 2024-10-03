@@ -5,4 +5,11 @@
     <string name="password_field_hint">password</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign up</string>
+    <string name="sign_in_title">Sign In</string>
+    <string name="upload_photo">upload photo</string>
+    <string name="name_hint">name\n</string>
+    <string name="confirm_password_field_hint">confirm password</string>
+    <string name="choose_hobbies">choose up to 5 hobbies</string>
+    <string name="save">Save</string>
+    <string name="insert_year_of_birth">Insert Year of Birth</string>
 </resources>

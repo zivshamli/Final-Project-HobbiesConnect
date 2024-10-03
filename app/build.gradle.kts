@@ -47,7 +47,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //circle image view for profile picture
-
     implementation (libs.circleimageview)
 
+    //glide for images
+    implementation(libs.glide)
 }
+
+
