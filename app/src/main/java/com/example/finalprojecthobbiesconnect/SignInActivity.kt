@@ -22,6 +22,9 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
 
@@ -48,11 +51,8 @@ class SignInActivity : AppCompatActivity() {
     private var password:String = ""
     private var confirmPassword:String = ""
 
-    private var profilePhotoUri:String = Uri.parse(
-        ContentResolver.SCHEME_ANDROID_RESOURCE +
-            "://" + resources.getResourcePackageName(R.drawable.avatar) +
-            '/' + resources.getResourceTypeName(R.drawable.avatar) +
-            '/' + resources.getResourceEntryName(R.drawable.avatar)).toString()
+    private var profilePhotoUri:String =""
+
 
     private var friendsList: MutableList<String> = mutableListOf()
     private var pendingFriendsList: MutableList<String> = mutableListOf()
@@ -92,6 +92,11 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        profilePhotoUri = Uri.parse(
+            ContentResolver.SCHEME_ANDROID_RESOURCE +
+                    "://" + resources.getResourcePackageName(R.drawable.avatar) +
+                    '/' + resources.getResourceTypeName(R.drawable.avatar) +
+                    '/' + resources.getResourceEntryName(R.drawable.avatar)).toString()
         findViews()
         initViews()
     }
@@ -129,25 +134,14 @@ class SignInActivity : AppCompatActivity() {
         if (!validateFields()) {
             return
         }
-        val user = User(
-            username = username,
-            email = email,
-            password = password,
-            selectedYear = selectedYear,
-            profilePhoto = profilePhotoUri,
-            friendsList = friendsList,
-            pendingFriendsList = pendingFriendsList,
-            chatList = chatList
-        )
+        val user = User(username, email, selectedYear, password, profilePhotoUri, friendsList, pendingFriendsList, chatList)
         saveUserToFirebase(user)
-          
+
+
 
     }
 
-    private fun saveUserToFirebase(user: User): User {
-       return user
 
-    }
 
     private fun initYearSpinner() {
         val years = mutableListOf<String>()
@@ -217,8 +211,8 @@ class SignInActivity : AppCompatActivity() {
 
     private fun openGallery() {
 
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
         requestGalleryLauncher.launch(intent)
 
 
@@ -243,11 +237,11 @@ class SignInActivity : AppCompatActivity() {
 
     private fun requestStoragePermission() {
 
-if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-    requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
-} else {
-    requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
-}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
+        } else {
+            requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+        }
 
 
 
@@ -270,38 +264,109 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             }
         }
     }
-        private fun validateFields(): Boolean {
-            username = nameTextField.text.toString()
-            email = emailTextField.text.toString()
-            password = passwordTextField.text.toString()
-            confirmPassword = confirmPasswordTextField.text.toString()
-            selectedYear = yearPicker.selectedItem.toString().toInt()
-            if(username=="") {
-                SignalManager.getInstance().vibrateAndToast("Please enter your name")
-                return false
-            }
-            if(email=="") {
-                SignalManager.getInstance().vibrateAndToast("Please enter your email")
-                return false
-            }
-            if(password=="") {
-                SignalManager.getInstance().vibrateAndToast("Please enter your password")
-                return false
-            }
-            if(confirmPassword=="") {
-                SignalManager.getInstance().vibrateAndToast("Please confirm your password")
-                return false
-            }
-            if(password!=confirmPassword) {
-                SignalManager.getInstance().vibrateAndToast("Passwords don't match")
-                return false
-            }
-            return true
+    private fun validateFields(): Boolean {
+        username = nameTextField.text.toString()
+        email = emailTextField.text.toString()
+        password = passwordTextField.text.toString()
+        confirmPassword = confirmPasswordTextField.text.toString()
+        selectedYear = yearPicker.selectedItem.toString().toInt()
+        if(username=="") {
+            SignalManager.getInstance().vibrateAndToast("Please enter your name")
+            return false
+        }
+        if(email=="") {
+            SignalManager.getInstance().vibrateAndToast("Please enter your email")
+            return false
+        }
+        if(password=="") {
+            SignalManager.getInstance().vibrateAndToast("Please enter your password")
+            return false
+        }
+        if(confirmPassword=="") {
+            SignalManager.getInstance().vibrateAndToast("Please confirm your password")
+            return false
+        }
+        if(password!=confirmPassword) {
+            SignalManager.getInstance().vibrateAndToast("Passwords don't match")
+            return false
+        }
+        return true
 
 
+    }
+    private fun saveUserToFirebase(user: User) {
+        val auth = FirebaseAuth.getInstance()
+        auth.createUserWithEmailAndPassword(user.email, user.password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val userEmail = auth.currentUser?.email
+                    if (userEmail != null) {
+                        // Upload profile image to Firebase Storage + save user details to Firebase Realtime Database
+                        uploadProfileImage(userEmail, Uri.parse(user.profilePhoto))
+                    }
+                } else {
+                    SignalManager.getInstance().vibrateAndToast("Failed to register: ${task.exception?.message}")
+                }
+            }
+    }
+
+    private fun uploadProfileImage(userEmail: String, parse: Uri?) {
+
+        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${userEmail.replace(".", ",")}.jpg")
+
+        if (parse == null) {
+            SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
+            return
         }
 
+        storageRef.putFile(parse)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    saveUserDetailsToDatabase(userEmail, uri.toString())
+                }
+            }
+            .addOnFailureListener {
+                SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
+            }
+    }
+
+    private fun saveUserDetailsToDatabase(userEmail: String, profilePhotoUrl: String) {
+        val userId = userEmail.replace(".", ",")
+        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+
+        val user = User(
+            username = username,
+            email = userEmail,
+            password = password,
+            selectedYear = selectedYear,
+            profilePhoto = profilePhotoUrl,
+            friendsList = friendsList,
+            pendingFriendsList = pendingFriendsList,
+            chatList = chatList
+        )
+
+        databaseRef.setValue(user)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    changeActivity()
+                    SignalManager.getInstance().toast("User registered successfully")
+                } else {
+                    SignalManager.getInstance().vibrateAndToast("Failed to save user details")
+                }
+            }
+    }
+
+    private fun changeActivity() {
+        val intent = Intent(this, NavigationActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+
+
 }
+
+
 
 
 

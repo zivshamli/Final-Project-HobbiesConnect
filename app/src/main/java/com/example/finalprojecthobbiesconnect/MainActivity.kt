@@ -7,6 +7,7 @@ import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var emailTextField: TextInputEditText
@@ -41,7 +42,9 @@ class MainActivity : AppCompatActivity() {
     private fun login() {
         if (!checkTextFields()) {
             return
-         }
+        }
+        signInUser(emailTextField.text.toString(), passwordTextField.text.toString())
+
     }
 
 
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             return false
         }
 
-       else if (emailTextField.text.toString().isEmpty() ) {
+        else if (emailTextField.text.toString().isEmpty() ) {
             SignalManager.getInstance().vibrateAndToast(Constants.ALRET2)
             return false
 
@@ -70,6 +73,29 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+    private fun changeActivity() {
+        val intent = Intent(this, NavigationActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun signInUser(email: String, password: String) {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    if (task.result?.user == null) {
+                        SignalManager.getInstance().vibrateAndToast("User not found")
+
+                    }
+                    else {
+                        changeActivity()
+                        SignalManager.getInstance().toast("Sign in successful!")
+                    }
+                } else {
+                    SignalManager.getInstance().vibrateAndToast("Sign in failed: ${task.exception?.message}")
+                }
+            }
+    }
+
 
 
 }
