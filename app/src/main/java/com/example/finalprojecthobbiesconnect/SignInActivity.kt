@@ -2,8 +2,7 @@ package com.example.finalprojecthobbiesconnect
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
-import android.Manifest.permission.READ_MEDIA_VIDEO
-import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -14,6 +13,7 @@ import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
@@ -47,7 +47,13 @@ class SignInActivity : AppCompatActivity() {
     private var email:String = ""
     private var password:String = ""
     private var confirmPassword:String = ""
-    private var profilePhotoUri:String = ""
+
+    private var profilePhotoUri:String = Uri.parse(
+        ContentResolver.SCHEME_ANDROID_RESOURCE +
+            "://" + resources.getResourcePackageName(R.drawable.avatar) +
+            '/' + resources.getResourceTypeName(R.drawable.avatar) +
+            '/' + resources.getResourceEntryName(R.drawable.avatar)).toString()
+
     private var friendsList: MutableList<String> = mutableListOf()
     private var pendingFriendsList: MutableList<String> = mutableListOf()
     private var chatList: MutableList<String> = mutableListOf()
@@ -70,7 +76,9 @@ class SignInActivity : AppCompatActivity() {
             val data: Intent? = result.data
             val selectedImageUri: Uri? = data?.data
             selectedImageUri?.let {
+                SignalManager.getInstance().toast("Image selected")
                 handleImageSelected(it)
+                profilePhotoUri=it.toString()
             }
         }
     }
@@ -121,6 +129,23 @@ class SignInActivity : AppCompatActivity() {
         if (!validateFields()) {
             return
         }
+        val user = User(
+            username = username,
+            email = email,
+            password = password,
+            selectedYear = selectedYear,
+            profilePhoto = profilePhotoUri,
+            friendsList = friendsList,
+            pendingFriendsList = pendingFriendsList,
+            chatList = chatList
+        )
+        saveUserToFirebase(user)
+          
+
+    }
+
+    private fun saveUserToFirebase(user: User): User {
+       return user
 
     }
 

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "12485764685",
+    "firebase_url": "https://hobbiesconnect-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "hobbiesconnect",
+    "storage_bucket": "hobbiesconnect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12485764685:android:96026b6732ea16c0741e04",
+        "android_client_info": {
+          "package_name": "com.example.finalprojecthobbiesconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzYvCS1qkdFsAi4ub3eOrn9wHoLBrOe_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -51,6 +52,18 @@ dependencies {
 
     //glide for images
     implementation(libs.glide)
+
+    //Firebase:
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    //Auth:
+    implementation(libs.firebase.auth)
+    //Realtime Database:
+    implementation(libs.google.firebase.database)
+    //Storage:
+    implementation(libs.firebase.storage)
+
+
 }
 
 
