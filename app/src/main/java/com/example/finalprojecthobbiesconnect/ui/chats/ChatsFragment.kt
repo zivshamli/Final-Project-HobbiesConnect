@@ -1,16 +1,13 @@
 package com.example.finalprojecthobbiesconnect.ui.chats
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.finalprojecthobbiesconnect.R
 import com.example.finalprojecthobbiesconnect.databinding.FragmentChatsBinding
-import com.example.finalprojecthobbiesconnect.ui.chats.ChatsViewModel
 
 class ChatsFragment : Fragment() {
     private var _binding: FragmentChatsBinding? = null
