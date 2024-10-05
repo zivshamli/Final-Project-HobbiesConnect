@@ -12,4 +12,11 @@
     <string name="choose_hobbies">choose up to 5 hobbies</string>
     <string name="save">Save</string>
     <string name="insert_year_of_birth">Insert Year of Birth</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_search">Search</string>
+    <string name="title_chats">Chats</string>
 </resources>
