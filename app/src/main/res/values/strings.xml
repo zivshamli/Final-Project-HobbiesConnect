@@ -19,4 +19,9 @@
     <string name="title_profile">Profile</string>
     <string name="title_search">Search</string>
     <string name="title_chats">Chats</string>
+    <string name="logout">Logout</string>
+    <string name="max_age">Max age</string>
+    <string name="min_age">Min age</string>
+    <string name="search_by_name">Search by name</string>
+    <string name="search_by_hobbies">Search by hobbies</string>
 </resources>

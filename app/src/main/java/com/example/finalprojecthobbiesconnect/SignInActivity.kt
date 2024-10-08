@@ -17,6 +17,7 @@ import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
+import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -50,13 +51,11 @@ class SignInActivity : AppCompatActivity() {
     private var email:String = ""
     private var password:String = ""
     private var confirmPassword:String = ""
-
     private var profilePhotoUri:String =""
-
-
     private var friendsList: MutableList<String> = mutableListOf()
     private var pendingFriendsList: MutableList<String> = mutableListOf()
     private var chatList: MutableList<String> = mutableListOf()
+    private var isRead:Boolean = true
 
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -84,7 +83,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun handleImageSelected(it: Uri) {
-        ImageLoader.getInstance().load(it, profilePhoto)
+        ImageLoader.getInstance().load(it, profilePhoto, R.drawable.avatar)
 
     }
 
@@ -134,7 +133,7 @@ class SignInActivity : AppCompatActivity() {
         if (!validateFields()) {
             return
         }
-        val user = User(username, email, selectedYear, password, profilePhotoUri, friendsList, pendingFriendsList, chatList)
+        val user = User(username, email, selectedYear, profilePhotoUri, friendsList, pendingFriendsList, chatList,selectedHobbies,isRead)
         saveUserToFirebase(user)
 
 
@@ -243,9 +242,6 @@ class SignInActivity : AppCompatActivity() {
             requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
         }
 
-
-
-
     }
 
 
@@ -296,7 +292,7 @@ class SignInActivity : AppCompatActivity() {
     }
     private fun saveUserToFirebase(user: User) {
         val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(user.email, user.password)
+        auth.createUserWithEmailAndPassword(user.email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val userEmail = auth.currentUser?.email
@@ -311,8 +307,9 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun uploadProfileImage(userEmail: String, parse: Uri?) {
+        val userId = userEmail.replace(".", ",")
 
-        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${userEmail.replace(".", ",")}.jpg")
+        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
 
         if (parse == null) {
             SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
@@ -322,7 +319,7 @@ class SignInActivity : AppCompatActivity() {
         storageRef.putFile(parse)
             .addOnSuccessListener {
                 storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveUserDetailsToDatabase(userEmail, uri.toString())
+                    saveUserDetailsToDatabase(userId, uri.toString())
                 }
             }
             .addOnFailureListener {
@@ -330,26 +327,29 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserDetailsToDatabase(userEmail: String, profilePhotoUrl: String) {
-        val userId = userEmail.replace(".", ",")
+    private fun saveUserDetailsToDatabase(userId: String, profilePhotoUrl: String) {
+
         val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
 
         val user = User(
             username = username,
-            email = userEmail,
-            password = password,
-            selectedYear = selectedYear,
+            email = email,
+            birthyear = selectedYear,
             profilePhoto = profilePhotoUrl,
             friendsList = friendsList,
             pendingFriendsList = pendingFriendsList,
-            chatList = chatList
+            chatList = chatList,
+            hobbies = selectedHobbies,
+            isRead = isRead
+
         )
 
         databaseRef.setValue(user)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    changeActivity()
+                    MyActiveUserManager.setUser(user)
                     SignalManager.getInstance().toast("User registered successfully")
+                    changeActivity()
                 } else {
                     SignalManager.getInstance().vibrateAndToast("Failed to save user details")
                 }

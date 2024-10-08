@@ -4,19 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_300"
     tools:context=".ui.search.SearchFragment">
-
-    <TextView
-        android:id="@+id/text_search"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_search">
+
+    <MultiAutoCompleteTextView
+            android:id="@+id/search_hobbies"
+            android:layout_width="@dimen/search_field_width"
+            android:layout_height="@dimen/search_field_height"
+            android:hint="@string/search_by_hobbies"
+        android:textColor="@color/blue_900"
+        android:textColorHint="@color/blue_900"
+        android:background="@color/white"
+
+
+        />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_name"
+            android:layout_width="@dimen/search_field_width"
+            android:layout_height="@dimen/search_field_height"
+            android:hint="@string/search_by_name"
+            android:textColorHint="@color/blue_900"
+            android:textColor="@color/blue_900"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="@dimen/search_field_width"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/search_age_min"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/search_field_height"
+                android:layout_weight="1"
+                android:hint="@string/min_age"
+                android:inputType="number"
+                android:textColorHint="@color/blue_900"
+                android:textColor="@color/blue_900"
+                android:background="@color/white"
+                />
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/search_age_max"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/search_field_height"
+                android:layout_weight="1"
+                android:hint="@string/max_age"
+                android:inputType="number"
+                android:textColor="@color/blue_900"
+                android:textColorHint="@color/blue_900"
+                android:background="@color/white"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_search"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/blue_800"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size"
+            android:layout_gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/top_margin_search" />
+    </LinearLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

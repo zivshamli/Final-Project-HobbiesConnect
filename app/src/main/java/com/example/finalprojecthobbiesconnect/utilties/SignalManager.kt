@@ -13,7 +13,8 @@ import java.lang.ref.WeakReference
 class SignalManager private constructor(context: Context) {
     private val contextRef = WeakReference(context)
 
-    fun vibrate() {
+
+    private fun vibrate() {
         contextRef.get()?.let { context ->
             val vibrator: Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val vibratorManager =
