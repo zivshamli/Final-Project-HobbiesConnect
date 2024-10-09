@@ -72,6 +72,10 @@ dependencies {
     //Storage:
     implementation(libs.firebase.storage)
 
+    //Lottie:
+    implementation (libs.lottie)
+
+
 
 }
 

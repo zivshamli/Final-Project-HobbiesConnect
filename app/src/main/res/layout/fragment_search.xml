@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey_300"
     tools:context=".ui.search.SearchFragment">
     <LinearLayout
@@ -12,26 +12,30 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_search">
 
-    <MultiAutoCompleteTextView
+        <MultiAutoCompleteTextView
             android:id="@+id/search_hobbies"
             android:layout_width="@dimen/search_field_width"
             android:layout_height="@dimen/search_field_height"
             android:hint="@string/search_by_hobbies"
-        android:textColor="@color/blue_900"
-        android:textColorHint="@color/blue_900"
-        android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:background="@color/white"
+            android:layout_margin="@dimen/text_field_margin"
 
 
-        />
+            />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_name"
             android:layout_width="@dimen/search_field_width"
             android:layout_height="@dimen/search_field_height"
             android:hint="@string/search_by_name"
-            android:textColorHint="@color/blue_900"
-            android:textColor="@color/blue_900"
-            android:background="@color/white"/>
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:background="@color/white"
+            android:inputType="textPersonName"
+            android:layout_margin="@dimen/text_field_margin"
+            />
 
         <LinearLayout
             android:layout_width="@dimen/search_field_width"
@@ -46,9 +50,12 @@
                 android:layout_weight="1"
                 android:hint="@string/min_age"
                 android:inputType="number"
-                android:textColorHint="@color/blue_900"
-                android:textColor="@color/blue_900"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
                 android:background="@color/white"
+                android:layout_margin="@dimen/text_field_margin"
+
+
                 />
 
             <MultiAutoCompleteTextView
@@ -58,9 +65,12 @@
                 android:layout_weight="1"
                 android:hint="@string/max_age"
                 android:inputType="number"
-                android:textColor="@color/blue_900"
-                android:textColorHint="@color/blue_900"
-                android:background="@color/white"/>
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:background="@color/white"
+                android:layout_margin="@dimen/text_field_margin"
+
+                />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -68,17 +78,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_search"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/search_button_top_margin"
             android:backgroundTint="@color/blue_800"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size"
             android:layout_gravity="center"/>
 
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_animation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/top_margin_search"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/loading_animation"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/search_user_RV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/top_margin_search" />
+            android:layout_marginTop="@dimen/top_margin_search"
+            tools:listitem="@layout/horizontal_user_item"
+            android:visibility="visible"
+            />
+
     </LinearLayout>
 
 
