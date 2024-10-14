@@ -11,6 +11,8 @@ class Constants {
              "Food","Movies","Catan","Skating","Surfing","Yoga","Netflix & Chill",
              "Chess","Music","Dancing","Running","Bowling","Archery","Fishing","FIFA","Pool","Camping"
          )
+        const val SEARCH_FRAGMENT  :Int=1
+        const val NAVIGATION_KEY:String="navigation"
 
     }
 }

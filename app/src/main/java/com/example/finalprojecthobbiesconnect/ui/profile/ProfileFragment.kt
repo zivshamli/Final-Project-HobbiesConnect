@@ -21,6 +21,7 @@ import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
+import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -182,6 +183,7 @@ class ProfileFragment : Fragment() {
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
         MyActiveUserManager.logout()
+        OtherUserManager.getInstance().logout()
         changeActivityToLogin()
     }
 
@@ -267,6 +269,7 @@ class ProfileFragment : Fragment() {
             binding.profileChipGroupHobbies.addView(chip)
 
         }
+
     }
 
 

@@ -30,7 +30,7 @@
             android:id="@+id/profile_upload_photo_BTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/button_top_pic"
             android:backgroundTint="@color/blue_800"
             android:layout_above="@id/profile_name_text_view"
             android:text="@string/upload_photo"
@@ -41,7 +41,7 @@
 
 <com.google.android.material.textview.MaterialTextView
             android:id="@+id/profile_name_text_view"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/text_field_height"
             android:textSize="@dimen/text_size"
             android:background="@color/grey_300"
@@ -130,7 +130,7 @@
             android:textColor="@color/white"
             android:layout_below="@id/profile_save_BTN"
             android:layout_gravity="center"
-            android:layout_marginBottom="60dp"/>
+            android:layout_marginBottom="@dimen/profile_signout_BTN_bottom_margin"/>
 
 
 

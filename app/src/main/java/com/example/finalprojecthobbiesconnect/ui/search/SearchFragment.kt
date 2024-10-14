@@ -2,6 +2,7 @@ package com.example.finalprojecthobbiesconnect.ui.search
 
 //noinspection SuspiciousImport
 import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,14 @@ import android.widget.MultiAutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalprojecthobbiesconnect.ProfileFriendActivity
 import com.example.finalprojecthobbiesconnect.adapters.SearchUserAdapter
 import com.example.finalprojecthobbiesconnect.databinding.FragmentSearchBinding
 import com.example.finalprojecthobbiesconnect.interfaces.Callback_SearchUserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
+import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -104,7 +107,8 @@ class SearchFragment : Fragment() {
         userAdapter=SearchUserAdapter(emptyList())
         userAdapter.callbackSearchUserCallback=object: Callback_SearchUserCallback {
             override fun searchUserClick(user: User, position: Int) {
-                SignalManager.getInstance().toast("Choose you"+user.username)
+                OtherUserManager.getInstance().setUser(user)
+                changeActivity()
             }
 
         }
@@ -113,6 +117,15 @@ class SearchFragment : Fragment() {
         binding.searchUserRV.layoutManager = linearLayoutManager
         binding.searchUserRV.adapter=userAdapter
 
+    }
+
+    private fun changeActivity() {
+        val intent = Intent(requireContext(), ProfileFriendActivity::class.java)
+        val b = Bundle()
+        b.putInt(Constants.NAVIGATION_KEY, Constants.SEARCH_FRAGMENT)
+        intent.putExtras(b)
+        startActivity(intent)
+        activity?.finish()
     }
 
     private fun initAutoFillTextFieldViews() {

@@ -24,4 +24,13 @@
     <string name="min_age">Min age</string>
     <string name="search_by_name">Search by name</string>
     <string name="search_by_hobbies">Search by hobbies</string>
+    <string name="back">back</string>
+    <string name="vertical_scroll_view">vertical scroll view</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="message">Message</string>
+    <string name="pending">Pending</string>
+    <string name="friends">Friends</string>
+    <string name="accept">Accept</string>
+    <string name="friend_pending">Friend Pending</string>
+    <string name="decline">Decline</string>
 </resources>

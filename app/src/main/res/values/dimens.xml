@@ -31,5 +31,9 @@
     <dimen name="text_field_margin">2dp</dimen>
     <dimen name="search_user_hobbies_text_top_margin">15dp</dimen>
     <dimen name="item_top_margin">5dp</dimen>
+    <dimen name="back_BTN_size">52dp</dimen>
+    <dimen name="button_top_pic">5dp</dimen>
+    <dimen name="profile_signout_BTN_bottom_margin">60dp</dimen>
+    <dimen name="pending_BTN_hor_margin">8dp</dimen>
 
 </resources>
