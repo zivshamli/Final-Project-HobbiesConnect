@@ -2,6 +2,8 @@ package com.example.finalprojecthobbiesconnect.utilties
 
 class Constants {
     companion object{
+
+        const val FRIENDREQUESTMESSAGE:String="sent you a friend request"
         const val ALRET1 :String ="email and password missing!"
         const val ALRET2 :String ="email missing!"
         const val ALRET3 :String ="password missing!"
@@ -12,6 +14,7 @@ class Constants {
              "Chess","Music","Dancing","Running","Bowling","Archery","Fishing","FIFA","Pool","Camping"
          )
         const val SEARCH_FRAGMENT  :Int=1
+        const val NOTIFICATIONS_FRAGMENT  :Int=2
         const val NAVIGATION_KEY:String="navigation"
 
     }

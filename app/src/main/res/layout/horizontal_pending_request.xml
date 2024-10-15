@@ -65,6 +65,7 @@
                         android:layout_gravity="bottom"/>
 
                     <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/pending_user_decline_BTN"
                         android:layout_width="@dimen/search_field_height"
                         android:layout_height="@dimen/search_field_height"
                         android:src="@drawable/baseline_clear_24"

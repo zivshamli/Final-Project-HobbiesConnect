@@ -31,9 +31,10 @@ class NavigationActivity : AppCompatActivity() {
                 R.id.navigation_profile, R.id.navigation_search, R.id.navigation_notifications, R.id.navigation_chats
             )
         )
-        initNavigation()
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        initNavigation()
     }
 
     private fun initNavigation() {
@@ -41,6 +42,8 @@ class NavigationActivity : AppCompatActivity() {
         if(navigation!=0){
             when(navigation){
                 Constants.SEARCH_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_search
+                Constants.NOTIFICATIONS_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_notifications
+
             }
         }
 

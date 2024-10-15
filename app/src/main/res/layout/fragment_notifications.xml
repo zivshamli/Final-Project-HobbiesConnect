@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/notifications_RV"
-        android:background="@color/grey_300"/>
+        android:background="@color/grey_300"
+        tools:listitem="@layout/horizontal_pending_request"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

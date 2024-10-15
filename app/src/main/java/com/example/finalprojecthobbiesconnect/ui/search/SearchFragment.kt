@@ -62,6 +62,9 @@ class SearchFragment : Fragment() {
             binding.loadingAnimation.visibility = View.VISIBLE
             binding.searchUserRV.visibility = View.GONE
             searchUsersFromFirebase(hobbies, name, ageMin, ageMax)
+            // Hide the loading animation and show the RecyclerView
+            binding.loadingAnimation.visibility = View.GONE
+            binding.searchUserRV.visibility = View.VISIBLE
 
         }
     }
@@ -87,9 +90,7 @@ class SearchFragment : Fragment() {
 
                 // Update the RecyclerView with the filtered users
                 userAdapter.updateUsers(filteredUsers)
-                // Hide the loading animation and show the RecyclerView
-                binding.loadingAnimation.visibility = View.GONE
-                binding.searchUserRV.visibility = View.VISIBLE
+
 
             }
 

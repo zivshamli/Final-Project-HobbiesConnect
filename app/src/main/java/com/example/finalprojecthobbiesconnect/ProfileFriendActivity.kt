@@ -66,7 +66,7 @@ class ProfileFriendActivity : AppCompatActivity() {
         val updateUser=OtherUserManager.getInstance().getUser()
         if (updateUser != null){
             updateUser.pendingFriendsList.add(MyActiveUserManager.getUser().email)
-            updateUser.isRead=false
+            updateUser.isReadPend=false
             OtherUserManager.getInstance().setUser(updateUser)
             // save changes in database
             saveChangesAddPendingFriendAndReadInDatabase(updateUser)
@@ -79,14 +79,15 @@ class ProfileFriendActivity : AppCompatActivity() {
     }
 
     private fun saveChangesAddPendingFriendAndReadInDatabase(user: User) {
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(user.email)
+        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(user.email.replace(".",","))
         val updates = hashMapOf(
             "pendingFriendsList" to user.pendingFriendsList,
-            "isRead" to user.isRead
+            "readPend" to user.isReadPend
         )
         databaseRef.updateChildren(updates).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 initAddFriendBTN()
+
             } else {
                 SignalManager.getInstance().vibrateAndToast("Failed to save user details")
 
@@ -102,22 +103,39 @@ class ProfileFriendActivity : AppCompatActivity() {
         updateUser.friendsList.remove(MyActiveUserManager.getUser().email)
         OtherUserManager.getInstance().setUser(updateUser)
 
-        saveChangesRemoveFriendInDatabase(MyActiveUserManager.getUser())
-        saveChangesRemoveFriendInDatabase(OtherUserManager.getInstance().getUser()!!)
+        saveChangesRemoveFriendOtherInDatabase(OtherUserManager.getInstance().getUser()!!)
+        initAddFriendBTN()
       }
     }
 
     private fun saveChangesRemoveFriendInDatabase(user: User) {
         //save changes in database
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(user.email).child("friendsList")
+        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(user.email.replace(".",",")).child("friendsList")
         databaseRef.setValue(user.friendsList).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                initAddFriendBTN()
+               initAddFriendBTN()
+                initAddFriendBTNOnClick()
+
+
             } else {
                 SignalManager.getInstance().vibrateAndToast("Failed to save user details")
             }
 
         }
+    }
+
+    private fun saveChangesRemoveFriendOtherInDatabase(user: User) {
+        //save changes in database
+        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(user.email.replace(".",",")).child("friendsList")
+        databaseRef.setValue(user.friendsList).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                saveChangesRemoveFriendInDatabase(MyActiveUserManager.getUser())
+            } else {
+                SignalManager.getInstance().vibrateAndToast("Failed to save user details")
+            }
+
+        }
+
 
 
     }
@@ -138,7 +156,7 @@ class ProfileFriendActivity : AppCompatActivity() {
             binding.profileUserAddFriendBTN.isClickable=true
         }
         else {
-            binding.profileUserMessageBTN.text=getString(R.string.add_friend)
+            binding.profileUserAddFriendBTN.text=getString(R.string.add_friend)
             binding.profileUserAddFriendBTN.backgroundTintList=ContextCompat.getColorStateList(this,R.color.blue_800)
             binding.profileUserAddFriendBTN.setTextColor(ContextCompat.getColor(this,R.color.white))
             binding.profileUserMessageBTN.visibility=View.GONE

@@ -9,7 +9,8 @@ data class User(
     var pendingFriendsList: MutableList<String> = mutableListOf(),
     var chatList: MutableList<String> = mutableListOf(),
     var hobbies: MutableList<String> = mutableListOf(),
-    var isRead:Boolean = true
+    var isReadPend:Boolean = true,
+    var isReadChat:Boolean = true
 
 
     )

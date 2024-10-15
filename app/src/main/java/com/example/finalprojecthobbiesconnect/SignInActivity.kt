@@ -55,7 +55,8 @@ class SignInActivity : AppCompatActivity() {
     private var friendsList: MutableList<String> = mutableListOf()
     private var pendingFriendsList: MutableList<String> = mutableListOf()
     private var chatList: MutableList<String> = mutableListOf()
-    private var isRead:Boolean = true
+    private var isReadPend:Boolean = true
+    private var isReadChat:Boolean = true
 
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -133,7 +134,7 @@ class SignInActivity : AppCompatActivity() {
         if (!validateFields()) {
             return
         }
-        val user = User(username, email, selectedYear, profilePhotoUri, friendsList, pendingFriendsList, chatList,selectedHobbies,isRead)
+        val user = User(username, email, selectedYear, profilePhotoUri, friendsList, pendingFriendsList, chatList,selectedHobbies,isReadPend,isReadChat)
         saveUserToFirebase(user)
 
 
@@ -340,7 +341,8 @@ class SignInActivity : AppCompatActivity() {
             pendingFriendsList = pendingFriendsList,
             chatList = chatList,
             hobbies = selectedHobbies,
-            isRead = isRead
+            isReadPend = isReadPend,
+            isReadChat = isReadChat
 
         )
 

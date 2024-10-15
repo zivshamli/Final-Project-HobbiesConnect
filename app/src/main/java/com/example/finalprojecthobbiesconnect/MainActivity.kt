@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                         val user = FirebaseAuth.getInstance().currentUser
                         val userEmail = user!!.email!!.replace(".",",")
                          loadUserData(userEmail)
-                        MyActiveUserManager.getUser().email=userEmail
+                        MyActiveUserManager.getUser().email=userEmail.replace(",",".")
                         changeActivity()
                         SignalManager.getInstance().toast("Sign in successful!")
                     }
@@ -117,7 +117,9 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val user = snapshot.getValue(User::class.java)
                 if (user != null) {
-                    MyActiveUserManager.setUser(user)
+                    if(user.email==MyActiveUserManager.getUser().email||MyActiveUserManager.getUser().email=="") {
+                        MyActiveUserManager.setUser(user)
+                    }
                 } else {
                     SignalManager.getInstance().vibrateAndToast("Failed to load user data")
                 }
