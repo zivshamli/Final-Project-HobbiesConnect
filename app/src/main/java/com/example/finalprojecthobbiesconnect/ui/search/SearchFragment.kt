@@ -63,8 +63,7 @@ class SearchFragment : Fragment() {
             binding.searchUserRV.visibility = View.GONE
             searchUsersFromFirebase(hobbies, name, ageMin, ageMax)
             // Hide the loading animation and show the RecyclerView
-            binding.loadingAnimation.visibility = View.GONE
-            binding.searchUserRV.visibility = View.VISIBLE
+
 
         }
     }
@@ -87,7 +86,10 @@ class SearchFragment : Fragment() {
                                         (user.email!= MyActiveUserManager.getUser().email))
                     }
 
-
+                _binding?.let {
+                    it.loadingAnimation.visibility = View.GONE
+                    it.searchUserRV.visibility = View.VISIBLE
+                }
                 // Update the RecyclerView with the filtered users
                 userAdapter.updateUsers(filteredUsers)
 
