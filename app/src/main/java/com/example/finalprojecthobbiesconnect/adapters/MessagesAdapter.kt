@@ -59,9 +59,6 @@ class MessagesAdapter(private var messages: MutableList<Message>): RecyclerView.
     }
 
 
-    fun addMessage(message: Message) {
-        messages.add(message)
-        notifyItemInserted(messages.size - 1)
-    }
+
 
 }
