@@ -38,7 +38,7 @@ class NavigationActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_profile, R.id.navigation_search, R.id.navigation_notifications, R.id.navigation_chats
+                R.id.navigation_profile,R.id.navigation_friend_list ,R.id.navigation_search, R.id.navigation_notifications, R.id.navigation_chats
             )
         )
 
@@ -82,6 +82,10 @@ class NavigationActivity : AppCompatActivity() {
                    true
 
             }
+               R.id.navigation_friend_list->{
+                   navController.navigate(R.id.navigation_friend_list)
+                   true
+               }
             else -> false
                }
         }
@@ -134,6 +138,7 @@ class NavigationActivity : AppCompatActivity() {
             when(navigation){
                 Constants.SEARCH_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_search
                 Constants.NOTIFICATIONS_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_notifications
+                Constants.FRIEND_LIST_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_friend_list
 
             }
         }

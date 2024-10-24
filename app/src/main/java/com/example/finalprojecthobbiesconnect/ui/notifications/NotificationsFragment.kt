@@ -54,7 +54,7 @@ class NotificationsFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val pendingFriends = dataSnapshot.children.mapNotNull { it.getValue(User::class.java) }
                     .filter { user ->
-                       MyActiveUserManager.getUser().pendingFriendsList.contains(user.email.replace(",","."))
+                       MyActiveUserManager.getUser().pendingFriendsList.contains(user.email)
                     }
 
                 pendingFriendAdapter.updatePendingFriends(pendingFriends)

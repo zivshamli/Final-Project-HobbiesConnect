@@ -5,6 +5,10 @@
         android:id="@+id/navigation_profile"
         android:icon="@drawable/avatar"
         android:title="@string/title_profile" />
+    <item
+        android:id="@+id/navigation_friend_list"
+        android:icon="@drawable/baseline_friends_24"
+        android:title="@string/friend_list" />
 
     <item
         android:id="@+id/navigation_search"

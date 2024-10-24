@@ -23,8 +23,8 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="@dimen/profile_photo_size"
-                android:layout_height="@dimen/profile_photo_size"
+                android:layout_width="@dimen/profile_photo_notification_size"
+                android:layout_height="@dimen/profile_photo_notification_size"
                 android:layout_alignParentStart="true"
                 android:src="@drawable/avatar"
                 android:background="@color/white"
@@ -33,7 +33,7 @@
                 />
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/profile_photo_size"
+                android:layout_height="@dimen/profile_photo_notification_size"
                 android:orientation="vertical"
                 android:layout_toEndOf="@id/pending_user_profile_photo"
                 android:layout_marginHorizontal="@dimen/search_user_hor_margin_text">
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/search_user_top_margin_text"
+                    android:layout_marginTop="5dp"
                     android:layout_gravity="end"
                     >
                     <androidx.appcompat.widget.AppCompatImageButton
@@ -62,7 +62,7 @@
                         android:backgroundTint="@color/blue_800"
                         app:tint="@color/white"
                         android:contentDescription="@string/accept"
-                        android:layout_gravity="bottom"/>
+                        />
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/pending_user_decline_BTN"
@@ -72,7 +72,7 @@
                         android:backgroundTint="@color/red_a700"
                         app:tint="@color/white"
                         android:contentDescription="@string/decline"
-                        android:layout_gravity="bottom"
+
                         android:layout_toEndOf="@id/pending_user_accept_BTN"
                         android:layout_marginStart="@dimen/pending_BTN_hor_margin"/>
 

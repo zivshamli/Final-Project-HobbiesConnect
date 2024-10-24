@@ -2,11 +2,13 @@
 <resources>
     <dimen name="open_title_text_size">25sp</dimen>
     <dimen name="text_size">20sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
     <dimen name="logo_size">150dp</dimen>
     <dimen name="text_field_width">400dp</dimen>
     <dimen name="text_field_height">48dp</dimen>
     <dimen name="open_top_margin">32dp</dimen>
     <dimen name="profile_photo_size">100dp</dimen>
+    <dimen name="profile_photo_notification_size">110dp</dimen>
 
 
     <dimen name="open_hor_margin">40dp</dimen>
@@ -35,5 +37,10 @@
     <dimen name="button_top_pic">5dp</dimen>
     <dimen name="profile_signout_BTN_bottom_margin">60dp</dimen>
     <dimen name="pending_BTN_hor_margin">8dp</dimen>
+    <dimen name="chat_room_padding_linear_layout">5dp</dimen>
+    <dimen name="radius_message_bubble">16dp</dimen>
+    <dimen name="linear_layout_message_padding">5dp</dimen>
+    <dimen name="padding_message">10dp</dimen>
+    <dimen name="max_width_message">250dp</dimen>
 
 </resources>

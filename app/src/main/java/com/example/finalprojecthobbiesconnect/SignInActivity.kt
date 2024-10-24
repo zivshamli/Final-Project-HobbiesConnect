@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
+import java.util.Locale
 
 
 class SignInActivity : AppCompatActivity() {
@@ -81,6 +82,7 @@ class SignInActivity : AppCompatActivity() {
                 profilePhotoUri=it.toString()
             }
         }
+
     }
 
     private fun handleImageSelected(it: Uri) {
@@ -210,25 +212,36 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = "image/*"
 
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+        }
         requestGalleryLauncher.launch(intent)
-
-
     }
     private fun isPermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-            ContextCompat.checkSelfPermission(
-                this,
-                READ_MEDIA_IMAGES
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            ContextCompat.checkSelfPermission(
-                this,
-                READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
+        return when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
+                // Android 14 and above
+                ContextCompat.checkSelfPermission(
+                    this,
+                    READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                // Android 13
+                ContextCompat.checkSelfPermission(
+                    this,
+                    READ_MEDIA_IMAGES
+                ) == PackageManager.PERMISSION_GRANTED
+            }
+            else -> {
+                // Below Android 13
+                ContextCompat.checkSelfPermission(
+                    this,
+                    READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            }
         }
     }
 
@@ -236,13 +249,20 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun requestStoragePermission() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
-        } else {
-            requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
+                // Android 14 and above
+                requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
+            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                // Android 13
+                requestPermissionLauncher.launch(READ_MEDIA_IMAGES)
+            }
+            else -> {
+                // Below Android 13
+                requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+            }
         }
-
     }
 
 
@@ -263,7 +283,7 @@ class SignInActivity : AppCompatActivity() {
     }
     private fun validateFields(): Boolean {
         username = nameTextField.text.toString()
-        email = emailTextField.text.toString()
+        email = emailTextField.text.toString().lowercase(Locale.ROOT)
         password = passwordTextField.text.toString()
         confirmPassword = confirmPasswordTextField.text.toString()
         selectedYear = yearPicker.selectedItem.toString().toInt()

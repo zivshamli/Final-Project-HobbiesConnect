@@ -4,18 +4,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalprojecthobbiesconnect.R
 import com.example.finalprojecthobbiesconnect.databinding.HorizontalUserItemBinding
-import com.example.finalprojecthobbiesconnect.interfaces.Callback_SearchUserCallback
+import com.example.finalprojecthobbiesconnect.interfaces.Callback_UserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import java.time.LocalDate
 
 class SearchUserAdapter(private var userList: List<User>) : RecyclerView.Adapter<SearchUserAdapter.ViewHolder>() {
-    var callbackSearchUserCallback:Callback_SearchUserCallback?=null
+    var callbackSearchUserCallback:Callback_UserCallback?=null
     inner class ViewHolder(val binding: HorizontalUserItemBinding) : RecyclerView.ViewHolder(binding.root){
         init {
             binding.searchUserCard.setOnClickListener {
                 if(callbackSearchUserCallback!=null){
-                    callbackSearchUserCallback!!.searchUserClick(getItem(adapterPosition),adapterPosition)
+                    callbackSearchUserCallback!!.userClick(getItem(adapterPosition),adapterPosition)
                 }
             }
         }

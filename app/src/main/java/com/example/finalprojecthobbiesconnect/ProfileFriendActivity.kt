@@ -44,6 +44,23 @@ class ProfileFriendActivity : AppCompatActivity() {
         initAddFriendBTNOnClick()
         initHobbiesChipGroup()
         initBackBTN()
+        initMessageBTN()
+    }
+
+    private fun initMessageBTN() {
+        binding.profileUserMessageBTN.setOnClickListener {
+            changeActivityToChatRoom()
+        }
+    }
+
+    private fun changeActivityToChatRoom() {
+        val intent = Intent(this, ChatRoomActivity::class.java)
+        val b = Bundle()
+        b.putInt(Constants.NAVIGATION_KEY,Constants.PROFILE_ACTIVITY)
+        b.putInt(Constants.NAVIGATION_KEY2,navigation)
+        intent.putExtras(b)
+        startActivity(intent)
+        finish()
     }
 
     private fun initAddFriendBTNOnClick() {

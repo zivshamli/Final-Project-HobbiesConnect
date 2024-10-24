@@ -10,6 +10,11 @@
         android:name="com.example.finalprojecthobbiesconnect.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_friend_list"
+        android:name="com.example.finalprojecthobbiesconnect.ui.friendList.FriendListFragment"
+        android:label="@string/my_friends"
+        tools:layout="@layout/fragment_friend_list" />
 
     <fragment
         android:id="@+id/navigation_search"

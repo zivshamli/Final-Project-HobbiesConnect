@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.finalprojecthobbiesconnect.R
 import com.example.finalprojecthobbiesconnect.databinding.HorizontalPendingRequestBinding
 import com.example.finalprojecthobbiesconnect.interfaces.Callback_PendingFriendCallback
+import com.example.finalprojecthobbiesconnect.models.Chats
+import com.example.finalprojecthobbiesconnect.models.Message
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
@@ -99,7 +101,111 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
         user.friendsList.add(MyActiveUserManager.getUser().email)
         addFriendListInFirebase(user,position)
         addFriendListInFirebaseToOtherUser(user)
+        sendMessages(user)
 
+
+
+    }
+
+    private fun sendMessages(user: User) {
+        // Send a message to the user
+        // Create a new chat with the user
+        var messageList: MutableList<Message> = mutableListOf()
+        val myUser = MyActiveUserManager.getUser()
+
+        val chatId : String = generateChatId(myUser.email,user.email)
+        if(!MyActiveUserManager.getUser().chatList.contains(chatId)) {
+            // Add the chat to the user's chat list
+
+            myUser.chatList.add(chatId)
+            MyActiveUserManager.setUser(myUser)
+            // Add the chat to the other user's chat list
+            user.chatList.add(chatId)
+        }else{
+            messageList=storeChatMessages(chatId)
+        }
+
+
+
+        val message =Message(MyActiveUserManager.getUser().email,Constants.STARTER_DEFUALT_MASSEGE)
+        val participantsStatus = linkedMapOf(
+            MyActiveUserManager.getUser().email.replace(".",",") to true,
+            user.email.replace(".",",") to false)
+        val chat = Chats(messageList,participantsStatus)
+        chat.addMessage(message)
+
+
+
+
+        // Add the chat to the Firebase database
+        val database = FirebaseDatabase.getInstance()
+        val chatRef = database.getReference("chats").child(chatId)
+        chatRef.setValue(chat).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Handle success
+                if(!MyActiveUserManager.getUser().chatList.contains(chatId)) {
+                    addChatListInFirebaseUser(user)
+                    addChatListInFirebaseUser(myUser)
+                }
+                Log.d("PendingFriendAdapter", "Chat added to Firebase database")
+            } else {
+                // Handle failure
+                SignalManager.getInstance()
+                    .vibrateAndToast("Failed to add chat to Firebase database")
+            }
+
+
+        }
+
+    }
+
+    private fun storeChatMessages(chatId: String): MutableList<Message> {
+        val database = FirebaseDatabase.getInstance()
+        val chatRef = database.getReference("chats").child(chatId)
+        var messageList: MutableList<Message> = mutableListOf()
+        chatRef.get().addOnSuccessListener { dataSnapshot ->
+            val chat = dataSnapshot.getValue(Chats::class.java)
+            if (chat != null) {
+                messageList = chat.getMessages().toMutableList()
+                messageList.sortBy { it.timestamp }
+            }
+        }
+        return messageList
+
+
+
+
+
+
+    }
+
+
+    private fun addChatListInFirebaseUser(user: User) {
+        // Add the chat to the user's chat list in Firebase
+       val database = FirebaseDatabase.getInstance()
+        val userRef = database.getReference("users").child(user.email.replace(".",","))
+        userRef.child("chatList").setValue(user.chatList).addOnCompleteListener{task ->
+            if (task.isSuccessful) {
+                // Handle success
+
+                Log.d("PendingFriendAdapter", "Chat added to user's chat list in Firebase")
+            }
+            else {
+                // Handle failure
+                SignalManager.getInstance().vibrateAndToast("Failed to add chat to user's chat list")
+            }
+        }
+
+    }
+
+    private fun generateChatId(email: String, email1: String): String {
+        val email1replace = email1.replace(".",",")
+        val emailreplace = email.replace(".",",")
+        return if (emailreplace < email1replace) {
+            "$emailreplace-$email1replace"
+        } else {
+            "$email1replace-$emailreplace"
+        }
 
 
     }

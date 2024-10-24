@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">Final Project HobbiesConnect</string>
     <string name="social_name">Hobbies Connect</string>
-    <string name="email_hint">email</string>
-    <string name="password_field_hint">password</string>
+    <string name="email_hint">Email</string>
+    <string name="password_field_hint">Password</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in_title">Sign In</string>
     <string name="upload_photo">upload photo</string>
-    <string name="name_hint">name\n</string>
-    <string name="confirm_password_field_hint">confirm password</string>
-    <string name="choose_hobbies">choose up to 5 hobbies</string>
+    <string name="name_hint">Name\n</string>
+    <string name="confirm_password_field_hint">Confirm password</string>
+    <string name="choose_hobbies">Choose up to 5 hobbies</string>
     <string name="save">Save</string>
     <string name="insert_year_of_birth">Insert Year of Birth</string>
     <string name="title_activity_navigation">NavigationActivity</string>
@@ -33,4 +33,13 @@
     <string name="accept">Accept</string>
     <string name="friend_pending">Friend Pending</string>
     <string name="decline">Decline</string>
+    <string name="user_name">User Name</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="send">Send</string>
+    <string name="sent_message">Sent Message</string>
+    <string name="received_message">Received Message</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_friends">My Friends</string>
+    <string name="friend_list">Friend List</string>
 </resources>

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.finalprojecthobbiesconnect.ProfileFriendActivity
 import com.example.finalprojecthobbiesconnect.adapters.SearchUserAdapter
 import com.example.finalprojecthobbiesconnect.databinding.FragmentSearchBinding
-import com.example.finalprojecthobbiesconnect.interfaces.Callback_SearchUserCallback
+import com.example.finalprojecthobbiesconnect.interfaces.Callback_UserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
@@ -108,8 +108,8 @@ class SearchFragment : Fragment() {
 
     private fun initRecyclerView() {
         userAdapter=SearchUserAdapter(emptyList())
-        userAdapter.callbackSearchUserCallback=object: Callback_SearchUserCallback {
-            override fun searchUserClick(user: User, position: Int) {
+        userAdapter.callbackSearchUserCallback=object: Callback_UserCallback {
+            override fun userClick(user: User, position: Int) {
                 OtherUserManager.getInstance().setUser(user)
                 changeActivity()
             }
