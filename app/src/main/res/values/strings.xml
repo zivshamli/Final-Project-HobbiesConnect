@@ -38,7 +38,6 @@
     <string name="send">Send</string>
     <string name="sent_message">Sent Message</string>
     <string name="received_message">Received Message</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_friends">My Friends</string>
     <string name="friend_list">Friend List</string>
