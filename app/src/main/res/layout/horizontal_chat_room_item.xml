@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/grey_300"
+    android:layout_marginTop="@dimen/item_top_margin">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/user_chat_partner_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="@dimen/line_elevation"
+        app:cardCornerRadius="@dimen/line_corner_radius"
+        app:cardElevation="@dimen/line_elevation"
+        android:layout_marginVertical="@dimen/item_top_margin">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/profile_photo_size"
+                android:layout_height="@dimen/profile_photo_size"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/avatar"
+                android:background="@color/white"
+                android:id="@+id/user_chat_partner_profile_photo"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay"
+                />
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_photo_size"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/user_chat_partner_profile_photo"
+                android:layout_marginHorizontal="@dimen/search_user_hor_margin_text">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/user_chat_partner_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/search_user_top_margin_text"
+                    tools:text="Name , Age"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textColor="@color/blue_800"
+                    android:textStyle="bold"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/last_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/search_user_hobbies_text_top_margin"
+                    tools:text="@string/last_message"
+                    android:textSize="@dimen/my_hobbies_text_size"
+                    android:textColor="@color/grey_900"
+                    android:textStyle="normal"/>
+
+
+
+
+
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

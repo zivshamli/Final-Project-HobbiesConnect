@@ -56,7 +56,18 @@ class NotificationsFragment : Fragment() {
                     .filter { user ->
                        MyActiveUserManager.getUser().pendingFriendsList.contains(user.email)
                     }
+                // Update the RecyclerView with the pending friends list
+                // If the list is empty, hide the RecyclerView and show a message
+                _binding?.let{
+                    if(pendingFriends.isEmpty()){
+                        it.noPendingRequestsTV.visibility=View.VISIBLE
+                        it.notificationsRV.visibility=View.GONE
+                    }else{
+                        it.noPendingRequestsTV.visibility=View.GONE
+                        it.notificationsRV.visibility=View.VISIBLE
+                    }
 
+                }
                 pendingFriendAdapter.updatePendingFriends(pendingFriends)
 
 

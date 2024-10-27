@@ -12,6 +12,7 @@ import com.example.finalprojecthobbiesconnect.models.Message
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
+import com.example.finalprojecthobbiesconnect.utilties.SoundManager
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,6 +28,8 @@ class ChatRoomActivity : AppCompatActivity() {
     private val database= FirebaseDatabase.getInstance()
     private  lateinit var messagesRef: DatabaseReference
     private lateinit var chatId: String
+    private val soundManager: SoundManager = SoundManager(this)
+
 
     private lateinit var binding: ActivityChatRoomBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +86,10 @@ class ChatRoomActivity : AppCompatActivity() {
                     messagesList.sortBy { message -> message.timestamp }
                     messageAdapter.notifyDataSetChanged()
                     binding.recyclerViewMessages.scrollToPosition(messagesList.size - 1)
+                    if (it.senderEmail != MyActiveUserManager.getUser().email) {
+                        soundManager.playSound(R.raw.received_message_sound)
+                    }
+
                 }
             }
 
@@ -110,6 +117,9 @@ class ChatRoomActivity : AppCompatActivity() {
                 messagesRef.push().setValue(newMessage).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         binding.messageEditText.text?.clear()
+
+                            soundManager.playSound(R.raw.send_message_sound)
+
                         updateParticipateStatus()
                     } else {
                         println("Failed to send message: ${task.exception?.message}")

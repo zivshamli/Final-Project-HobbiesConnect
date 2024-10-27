@@ -54,23 +54,27 @@
                     android:layout_marginTop="5dp"
                     android:layout_gravity="end"
                     >
-                    <androidx.appcompat.widget.AppCompatImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/pending_user_accept_BTN"
-                        android:layout_width="@dimen/search_field_height"
-                        android:layout_height="@dimen/search_field_height"
-                        android:src="@drawable/baseline_check_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/accept"
+                        android:textColor="@color/white"
                         android:backgroundTint="@color/blue_800"
-                        app:tint="@color/white"
                         android:contentDescription="@string/accept"
+                        android:textSize="@dimen/my_hobbies_text_size"
+
                         />
 
-                    <androidx.appcompat.widget.AppCompatImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/pending_user_decline_BTN"
-                        android:layout_width="@dimen/search_field_height"
-                        android:layout_height="@dimen/search_field_height"
-                        android:src="@drawable/baseline_clear_24"
-                        android:backgroundTint="@color/red_a700"
-                        app:tint="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                       android:text="@string/decline"
+                        android:textSize="@dimen/my_hobbies_text_size"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/grey_900"
+
                         android:contentDescription="@string/decline"
 
                         android:layout_toEndOf="@id/pending_user_accept_BTN"

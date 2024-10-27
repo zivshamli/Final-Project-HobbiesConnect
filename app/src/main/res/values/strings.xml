@@ -9,7 +9,7 @@
     <string name="upload_photo">upload photo</string>
     <string name="name_hint">Name\n</string>
     <string name="confirm_password_field_hint">Confirm password</string>
-    <string name="choose_hobbies">Choose up to 5 hobbies</string>
+    <string name="choose_hobbies">Choose up to 5 hobbies: </string>
     <string name="save">Save</string>
     <string name="insert_year_of_birth">Insert Year of Birth</string>
     <string name="title_activity_navigation">NavigationActivity</string>
@@ -41,4 +41,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_friends">My Friends</string>
     <string name="friend_list">Friend List</string>
+    <string name="last_message">last message</string>
+    <string name="no_pending_requests">No Pending Requests Right Now</string>
+    <string name="you_don_t_have_friends_right_now">You Don\'t Have Friends Right Now</string>
+    <string name="no_chats_right_now">No Chats Right Now</string>
+
 </resources>

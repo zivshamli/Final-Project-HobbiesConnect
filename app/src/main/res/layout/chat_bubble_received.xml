@@ -16,7 +16,7 @@
         android:background="@drawable/bg_bubble_received"
         android:text="@string/received_message"
         android:textSize="@dimen/text_size_medium"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:padding="@dimen/padding_message"
         android:maxWidth="@dimen/max_width_message" />
 </androidx.appcompat.widget.LinearLayoutCompat>

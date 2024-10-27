@@ -58,6 +58,18 @@ class FriendListFragment : Fragment() {
                     .filter { user->
                         MyActiveUserManager.getUser().friendsList.contains(user.email)
                     }
+                // update adapter
+                // if no friends show no friends textview
+                _binding?.let {
+                    if(friends.isEmpty()){
+                        it.friendListRV.visibility=View.GONE
+                        it.noFriendsTV.visibility=View.VISIBLE
+                    }else{
+                        it.friendListRV.visibility=View.VISIBLE
+                        it.noFriendsTV.visibility=View.GONE
+                    }
+
+                }
                 friendListAdapter.updateUsers(friends)
 
 
