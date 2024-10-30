@@ -7,7 +7,6 @@ import com.example.finalprojecthobbiesconnect.databinding.HorizontalUserItemBind
 import com.example.finalprojecthobbiesconnect.interfaces.Callback_UserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
-import java.time.LocalDate
 
 class SearchUserAdapter(private var userList: List<User>) : RecyclerView.Adapter<SearchUserAdapter.ViewHolder>() {
     var callbackSearchUserCallback:Callback_UserCallback?=null
@@ -41,10 +40,10 @@ class SearchUserAdapter(private var userList: List<User>) : RecyclerView.Adapter
         with(holder) {
             with(userList[position]) {
 
-                val age = LocalDate.now().year - userList[position].birthyear
+                val age = this.getAge()
                 binding.searchUserDetails.text = buildString {
                     append(userList[position].username)
-                    append(" ,")
+                    append(", ")
                     append("Age: ")
                     append(age.toString())
                 }

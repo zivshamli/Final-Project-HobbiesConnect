@@ -18,6 +18,7 @@ import com.example.finalprojecthobbiesconnect.databinding.FragmentSearchBinding
 import com.example.finalprojecthobbiesconnect.interfaces.Callback_UserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
@@ -44,7 +45,7 @@ class SearchFragment : Fragment() {
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        FuncUtlis.setupUI(requireActivity(), root)
         initAutoFillTextFieldViews()
         initRecyclerView()
         initSearchButton()
@@ -59,10 +60,11 @@ class SearchFragment : Fragment() {
             val name = binding.searchName.text.toString()
             val ageMin = binding.searchAgeMin.text.toString()
             val ageMax = binding.searchAgeMax.text.toString()
+            FuncUtlis.hideKeyboard(it)
             binding.loadingAnimation.visibility = View.VISIBLE
             binding.searchUserRV.visibility = View.GONE
             searchUsersFromFirebase(hobbies, name, ageMin, ageMax)
-            // Hide the loading animation and show the RecyclerView
+
 
 
         }
@@ -87,6 +89,7 @@ class SearchFragment : Fragment() {
                     }
 
                 _binding?.let {
+                    // Hide the loading animation and show the RecyclerView
                     it.loadingAnimation.visibility = View.GONE
                     it.searchUserRV.visibility = View.VISIBLE
                 }

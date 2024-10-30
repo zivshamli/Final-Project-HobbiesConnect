@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.finalprojecthobbiesconnect.databinding.ActivityNavigationBinding
+import com.example.finalprojecthobbiesconnect.models.Chats
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
@@ -21,8 +22,12 @@ import com.google.firebase.database.ValueEventListener
 class NavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNavigationBinding
-    private lateinit var badge: BadgeDrawable
+    private lateinit var badgePendingNotification: BadgeDrawable
+    private lateinit var badgeReadChat: BadgeDrawable
     private lateinit var navController: NavController
+
+     private  val database=   FirebaseDatabase.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +50,21 @@ class NavigationActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         initBadgeNotifications()
+        initBadgeReadChat()
         listenerOfNavBar()
         initNavigation()
 
     }
 
+    private fun initBadgeReadChat() {
+        badgeReadChat = binding.navView.getOrCreateBadge(R.id.navigation_chats)
+        badgeReadChat.isVisible = false
+        listenForReadChat()
+    }
+
     private fun initBadgeNotifications() {
-         badge = binding.navView.getOrCreateBadge(R.id.navigation_notifications)
-        badge.isVisible = false
+         badgePendingNotification = binding.navView.getOrCreateBadge(R.id.navigation_notifications)
+        badgePendingNotification.isVisible = false
         listenForPendingStatus()
 
 
@@ -99,7 +111,7 @@ class NavigationActivity : AppCompatActivity() {
 
         databaseRef.setValue(true).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                badge.isVisible = false
+                badgePendingNotification.isVisible = false
             } else {
                 SignalManager.getInstance().vibrateAndToast("Failed to save user details")
             }
@@ -109,16 +121,16 @@ class NavigationActivity : AppCompatActivity() {
     }
 
 
-    private fun listenForPendingStatus() {
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(
+     private fun listenForPendingStatus() {
+        val userRef =database.reference.child("users").child(
             MyActiveUserManager.getUser().email.replace(".",",")).child("readPend")
-        databaseRef.addValueEventListener(object : ValueEventListener {
+        userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val readPend = snapshot.getValue(Boolean::class.java)
                 if (readPend != null) {
                     if (!readPend) {
                         if(::binding.isInitialized) {
-                            badge.isVisible = true
+                            badgePendingNotification.isVisible = true
                         }
 
                     }
@@ -126,19 +138,52 @@ class NavigationActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                SignalManager.getInstance().vibrateAndToast("Failed to load user details")
             }
         })
 
         }
 
-    private fun initNavigation() {
+    private fun listenForReadChat(){
+        val chatRef=database.getReference("chats")
+        chatRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val chatRooms = snapshot.children.mapNotNull {
+                    it.getValue(Chats::class.java)
+                }.filter {
+                    it.participantsStatus.keys.contains(
+                        MyActiveUserManager.getUser().email.replace(".", ","))
+                            &&
+                            it.participantsStatus[MyActiveUserManager.getUser().email
+                                .replace(".", ",")] == false
+                }
+                if (::binding.isInitialized)
+                {
+                    badgeReadChat.isVisible = chatRooms.isNotEmpty()
+                }
+            }
+
+
+
+
+
+            override fun onCancelled(error: DatabaseError) {
+               SignalManager.getInstance().vibrateAndToast("Failed to load chats details")
+            }
+        })
+    }
+
+
+
+
+            private fun initNavigation() {
         val navigation=intent.getIntExtra(Constants.NAVIGATION_KEY,0)
         if(navigation!=0){
             when(navigation){
                 Constants.SEARCH_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_search
                 Constants.NOTIFICATIONS_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_notifications
                 Constants.FRIEND_LIST_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_friend_list
+                Constants.CHATS_FRAGMENT->binding.navView.selectedItemId=R.id.navigation_chats
 
             }
         }

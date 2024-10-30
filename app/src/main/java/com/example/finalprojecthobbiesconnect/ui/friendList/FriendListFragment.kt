@@ -14,6 +14,7 @@ import com.example.finalprojecthobbiesconnect.databinding.FragmentFriendListBind
 import com.example.finalprojecthobbiesconnect.interfaces.Callback_UserCallback
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
@@ -39,6 +40,7 @@ class FriendListFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding=FragmentFriendListBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        FuncUtlis.setupUI(requireActivity(), root)
         initRecyclerView()
         loadFriends()
 

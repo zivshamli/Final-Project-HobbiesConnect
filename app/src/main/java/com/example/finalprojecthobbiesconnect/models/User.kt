@@ -1,5 +1,7 @@
 package com.example.finalprojecthobbiesconnect.models
 
+import java.time.LocalDate
+
 data class User(
     var username:String = "",
     var email:String = "",
@@ -10,7 +12,13 @@ data class User(
     var chatList: MutableList<String> = mutableListOf(),
     var hobbies: MutableList<String> = mutableListOf(),
     var isReadPend:Boolean = true,
-    var isReadChat:Boolean = true
+
 
 
     )
+{
+    fun getAge():Int
+    {
+        return LocalDate.now().year - birthyear
+    }
+}

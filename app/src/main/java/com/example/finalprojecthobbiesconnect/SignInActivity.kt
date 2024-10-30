@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
@@ -42,6 +44,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var saveBTN: MaterialButton
     private lateinit var uploadPhotoBTN: MaterialButton
     private lateinit var myHobbiesText: MaterialTextView
+    private lateinit var loadingSaveAnimation: com.airbnb.lottie.LottieAnimationView
 
 
 
@@ -57,7 +60,6 @@ class SignInActivity : AppCompatActivity() {
     private var pendingFriendsList: MutableList<String> = mutableListOf()
     private var chatList: MutableList<String> = mutableListOf()
     private var isReadPend:Boolean = true
-    private var isReadChat:Boolean = true
 
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -100,6 +102,7 @@ class SignInActivity : AppCompatActivity() {
                     '/' + resources.getResourceTypeName(R.drawable.avatar) +
                     '/' + resources.getResourceEntryName(R.drawable.avatar)).toString()
         findViews()
+        FuncUtlis.setupUI(this, findViewById(android.R.id.content))
         initViews()
     }
 
@@ -116,6 +119,7 @@ class SignInActivity : AppCompatActivity() {
         uploadPhotoBTN = findViewById(R.id.upload_photo_BTN)
         myHobbiesText = findViewById(R.id.my_hobbies_text)
         saveBTN = findViewById(R.id.save_BTN)
+        loadingSaveAnimation = findViewById(R.id.loading_save_animation)
 
 
     }
@@ -136,7 +140,9 @@ class SignInActivity : AppCompatActivity() {
         if (!validateFields()) {
             return
         }
-        val user = User(username, email, selectedYear, profilePhotoUri, friendsList, pendingFriendsList, chatList,selectedHobbies,isReadPend,isReadChat)
+        val user = User(username, email, selectedYear, profilePhotoUri, friendsList, pendingFriendsList, chatList,selectedHobbies,isReadPend)
+        loadingSaveAnimation.visibility = View.VISIBLE
+        saveBTN.visibility = View.GONE
         saveUserToFirebase(user)
 
 
@@ -322,6 +328,8 @@ class SignInActivity : AppCompatActivity() {
                         uploadProfileImage(userEmail, Uri.parse(user.profilePhoto))
                     }
                 } else {
+                    saveBTN.visibility = View.VISIBLE
+                    loadingSaveAnimation.visibility = View.GONE
                     SignalManager.getInstance().vibrateAndToast("Failed to register: ${task.exception?.message}")
                 }
             }
@@ -344,6 +352,8 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener {
+                saveBTN.visibility = View.VISIBLE
+                loadingSaveAnimation.visibility = View.GONE
                 SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
             }
     }
@@ -361,9 +371,7 @@ class SignInActivity : AppCompatActivity() {
             pendingFriendsList = pendingFriendsList,
             chatList = chatList,
             hobbies = selectedHobbies,
-            isReadPend = isReadPend,
-            isReadChat = isReadChat
-
+            isReadPend = isReadPend
         )
 
         databaseRef.setValue(user)
@@ -371,6 +379,8 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     MyActiveUserManager.setUser(user)
                     SignalManager.getInstance().toast("User registered successfully")
+                    loadingSaveAnimation.visibility = View.GONE
+                    saveBTN.visibility = View.VISIBLE
                     changeActivity()
                 } else {
                     SignalManager.getInstance().vibrateAndToast("Failed to save user details")
@@ -383,6 +393,7 @@ class SignInActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 
 
 

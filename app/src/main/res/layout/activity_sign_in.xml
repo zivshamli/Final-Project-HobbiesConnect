@@ -188,7 +188,21 @@
             android:textColor="@color/white"
             android:layout_below="@id/my_hobbies_text"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/open_top_margin"/>
+            android:layout_marginBottom="@dimen/open_top_margin"
+            android:visibility="visible"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_save_animation"
+            android:layout_width="@dimen/loading_lottie_size"
+            android:layout_height="@dimen/loading_lottie_size"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/open_top_margin"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/loading_animation"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginBottom="@dimen/open_top_margin"
+            />
 
 
 

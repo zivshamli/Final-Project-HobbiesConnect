@@ -10,10 +10,10 @@ import com.example.finalprojecthobbiesconnect.adapters.MessagesAdapter
 import com.example.finalprojecthobbiesconnect.databinding.ActivityChatRoomBinding
 import com.example.finalprojecthobbiesconnect.models.Message
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SoundManager
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -37,6 +37,7 @@ class ChatRoomActivity : AppCompatActivity() {
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
         treatIntent()
+        FuncUtlis.setupUI(this, binding.root)
         connectToDatabase()
         initViews()
 
@@ -70,37 +71,17 @@ class ChatRoomActivity : AppCompatActivity() {
 
     private fun initViews() {
         initRecyclerView()
+
         loadAllMessages()
         initUserNameTextView()
         initSendBTN()
         initBackBTN()
-        listenForNewMessages()
+
     }
 
-    private fun listenForNewMessages() {
-        messagesRef.limitToLast(1).addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val newMessage = snapshot.getValue(Message::class.java)
-                newMessage?.let {
-                    messagesList.add(it)
-                    messagesList.sortBy { message -> message.timestamp }
-                    messageAdapter.notifyDataSetChanged()
-                    binding.recyclerViewMessages.scrollToPosition(messagesList.size - 1)
-                    if (it.senderEmail != MyActiveUserManager.getUser().email) {
-                        soundManager.playSound(R.raw.received_message_sound)
-                    }
 
-                }
-            }
 
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("ChatRoomActivity", "Error listening for new messages: ${error.message}")
-            }
-        })
-    }
+
 
     private fun initSendBTN() {
         binding.sendButton.setOnClickListener {
@@ -109,24 +90,30 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
     private fun sendMessage() {
-            val content = binding.messageEditText.text.toString().trim()
-            if (content.isNotEmpty()) {
-                val senderEmail = MyActiveUserManager.getUser().email
-                val newMessage = Message(senderEmail = senderEmail, content = content)
+        val content = binding.messageEditText.text.toString().trim()
+        if (content.isNotEmpty()) {
+            val senderEmail = MyActiveUserManager.getUser().email
+            val newMessage = Message(senderEmail = senderEmail, content = content)
 
-                messagesRef.push().setValue(newMessage).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        binding.messageEditText.text?.clear()
+            // Push the message to the database
+            messagesRef.push().setValue(newMessage).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
 
-                            soundManager.playSound(R.raw.send_message_sound)
+                    // Clear the input field
+                    binding.messageEditText.text?.clear()
 
-                        updateParticipateStatus()
-                    } else {
-                        println("Failed to send message: ${task.exception?.message}")
-                    }
+                    // Play sound for sending a message
+                    soundManager.playSound(R.raw.send_message_sound)
+
+                    // Update participant status
+                    updateParticipateStatus()
+                } else {
+                    println("Failed to send message: ${task.exception?.message}")
                 }
             }
+        }
     }
+
 
     private fun updateParticipateStatus() {
         val chatRef=database.getReference("chats").child(chatId).child("participantsStatus")
@@ -144,7 +131,7 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
     private fun loadAllMessages() {
-        messagesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        messagesRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 messagesList.clear()
                 for (messageSnapshot in snapshot.children) {
@@ -155,7 +142,18 @@ class ChatRoomActivity : AppCompatActivity() {
                 messagesList.sortBy { message -> message.timestamp }
 
                 messageAdapter.notifyDataSetChanged()
+
                 binding.recyclerViewMessages.scrollToPosition(messagesList.size - 1)
+                //THIS IS THE PART
+                if(!isFinishing&&!isDestroyed)
+                    if (messagesList.isNotEmpty()) {
+                        if (messagesList.last().senderEmail != MyActiveUserManager.getUser().email) {
+                            soundManager.playSound(R.raw.received_message_sound)
+                            updateMyUserStatus()
+                        }
+
+                    }
+
             }
 
 
@@ -163,6 +161,18 @@ class ChatRoomActivity : AppCompatActivity() {
                 println("Failed to load messages: ${error.message}")
             }
         })
+    }
+
+    private fun updateMyUserStatus() {
+        val chatRef=database.getReference("chats").child(chatId).child("participantsStatus").child(MyActiveUserManager.getUser().email.replace(".",","))
+        chatRef.setValue(true).addOnCompleteListener{ task ->
+            if (task.isSuccessful) {
+                Log.d("ChatRoomActivity", "My user status updated successfully")
+            } else {
+                Log.e("ChatRoomActivity", "Failed to update my user status: ${task.exception?.message}")
+            }
+        }
+
     }
 
     private fun initBackBTN() {
@@ -176,6 +186,14 @@ class ChatRoomActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileFriendActivity::class.java)
             val b = Bundle()
             b.putInt(Constants.NAVIGATION_KEY, navigation2)
+            intent.putExtras(b)
+            startActivity(intent)
+            finish()
+        }
+        else if (navigation==Constants.CHATS_FRAGMENT){
+            val intent = Intent(this, NavigationActivity::class.java)
+            val b = Bundle()
+            b.putInt(Constants.NAVIGATION_KEY, navigation)
             intent.putExtras(b)
             startActivity(intent)
             finish()
@@ -199,4 +217,6 @@ class ChatRoomActivity : AppCompatActivity() {
         binding.userNameTextView.text= OtherUserManager.getInstance().getUser()!!.username
 
     }
+
+
 }

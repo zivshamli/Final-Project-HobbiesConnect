@@ -19,14 +19,13 @@ import com.example.finalprojecthobbiesconnect.R
 import com.example.finalprojecthobbiesconnect.databinding.FragmentProfileBinding
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
-import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
+import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import java.time.LocalDate
 
 class ProfileFragment : Fragment() {
 
@@ -196,8 +195,7 @@ class ProfileFragment : Fragment() {
 
     private fun initTextViews() {
         binding.profileNameTextView.text = MyActiveUserManager.getUser().username
-         val currentYear = LocalDate.now().year
-        val age: Int = currentYear - MyActiveUserManager.getUser().birthyear
+       val age=MyActiveUserManager.getUser().getAge()
         binding.profileAgeText.text =buildString {
         append("Age: ")
         append(age.toString())

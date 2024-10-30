@@ -110,7 +110,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     private fun sendMessages(user: User) {
         // Send a message to the user
         // Create a new chat with the user
-        var messageList: MutableList<Message> = mutableListOf()
+        var messageMap: MutableMap<String,Message> = mutableMapOf()
         val myUser = MyActiveUserManager.getUser()
 
         val chatId : String = generateChatId(myUser.email,user.email)
@@ -122,7 +122,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
             // Add the chat to the other user's chat list
             user.chatList.add(chatId)
         }else{
-            messageList=storeChatMessages(chatId)
+            messageMap=loadChatMessages(chatId)
         }
 
 
@@ -131,7 +131,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
         val participantsStatus = linkedMapOf(
             MyActiveUserManager.getUser().email.replace(".",",") to true,
             user.email.replace(".",",") to false)
-        val chat = Chats(messageList,participantsStatus)
+        val chat = Chats(messageMap,participantsStatus)
         chat.addMessage(message)
 
 
@@ -159,18 +159,17 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
 
     }
 
-    private fun storeChatMessages(chatId: String): MutableList<Message> {
+    private fun loadChatMessages(chatId: String): MutableMap<String,Message> {
         val database = FirebaseDatabase.getInstance()
         val chatRef = database.getReference("chats").child(chatId)
-        var messageList: MutableList<Message> = mutableListOf()
+        var messageMap: MutableMap<String,Message> = mutableMapOf()
         chatRef.get().addOnSuccessListener { dataSnapshot ->
             val chat = dataSnapshot.getValue(Chats::class.java)
             if (chat != null) {
-                messageList = chat.getMessages().toMutableList()
-                messageList.sortBy { it.timestamp }
+                messageMap = chat.messages.toSortedMap().toMutableMap()
             }
         }
-        return messageList
+        return messageMap
 
 
 

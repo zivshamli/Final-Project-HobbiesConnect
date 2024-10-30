@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.google.android.material.button.MaterialButton
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         findViews()
+        FuncUtlis.setupUI(this, findViewById(android.R.id.content))
         initViews()
 
     }
@@ -51,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         if (!checkTextFields()) {
             return
         }
-        signInUser(emailTextField.text.toString(), passwordTextField.text.toString())
+        signInUser(emailTextField.text.toString().lowercase(), passwordTextField.text.toString())
 
     }
 

@@ -8,13 +8,16 @@ import androidx.core.content.ContextCompat
 import com.example.finalprojecthobbiesconnect.databinding.ActivityProfileFriendBinding
 import com.example.finalprojecthobbiesconnect.models.User
 import com.example.finalprojecthobbiesconnect.utilties.Constants
+import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.google.android.material.chip.Chip
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import java.time.LocalDate
+import com.google.firebase.database.ValueEventListener
 
 class ProfileFriendActivity : AppCompatActivity() {
     private var navigation:Int = 0
@@ -26,8 +29,9 @@ class ProfileFriendActivity : AppCompatActivity() {
         binding = ActivityProfileFriendBinding.inflate(layoutInflater)
         setContentView(binding.root)
         treatIntent()
-
+        FuncUtlis.setupUI(this, binding.root)
         initViews()
+        loadChanges()
 
 
         }
@@ -245,7 +249,7 @@ class ProfileFriendActivity : AppCompatActivity() {
 
     private fun initTextViews() {
         binding.profileUserNameTextView.text= OtherUserManager.getInstance().getUser()?.username ?:""
-        val age=OtherUserManager.getInstance().getUser()?.birthyear?.let { LocalDate.now().year-it}
+        val age=OtherUserManager.getInstance().getUser()?.getAge()
         binding.profileUserAgeText.text=buildString {
             append("Age: ")
             append(age.toString())
@@ -254,4 +258,27 @@ class ProfileFriendActivity : AppCompatActivity() {
 
 
     }
+     private  fun loadChanges()
+    {
+         val database=FirebaseDatabase.getInstance()
+        val  otherUserRef=database.getReference().child("users").child(MyActiveUserManager.getUser().email.replace(".",","))
+        otherUserRef.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(!isDestroyed&&!isFinishing)
+                {
+                    initAddFriendBTN()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                SignalManager.getInstance().vibrateAndToast("Failed to load changes")
+            }
+
+        })
+
+
+
+
+     }
 }

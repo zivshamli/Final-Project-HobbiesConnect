@@ -42,5 +42,6 @@
     <dimen name="linear_layout_message_padding">5dp</dimen>
     <dimen name="padding_message">10dp</dimen>
     <dimen name="max_width_message">250dp</dimen>
+    <dimen name="loading_lottie_size">50dp</dimen>
 
 </resources>
