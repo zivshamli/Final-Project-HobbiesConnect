@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/grey_300"
     android:layout_marginTop="@dimen/item_top_margin">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/user_chat_partner_card"
         android:layout_width="match_parent"
@@ -55,7 +56,9 @@
                     tools:text="@string/last_message"
                     android:textSize="@dimen/my_hobbies_text_size"
                     android:textColor="@color/grey_900"
-                    android:textStyle="normal"/>
+                    android:textStyle="normal"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
 
 
 

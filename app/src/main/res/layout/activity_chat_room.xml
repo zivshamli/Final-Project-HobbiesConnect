@@ -28,15 +28,25 @@
            android:backgroundTint="@color/blue_800"
             app:tint="@color/white"
             android:src="@drawable/baseline_arrow_back_24"
-            android:contentDescription="@string/back" />
+            android:contentDescription="@string/back"
+           />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilePhotoImageView_chat_room"
+            android:layout_width="@dimen/back_BTN_size"
+            android:layout_height="@dimen/back_BTN_size"
+            android:src="@drawable/avatar"
+            android:background="@color/blue_800"
+           app:civ_circle_background_color="@color/white"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/chat_room_padding_linear_layout"/>
 
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/userNameTextView"
             android:layout_gravity="center"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/user_name"
             android:textSize="@dimen/text_size"
             android:gravity="center"

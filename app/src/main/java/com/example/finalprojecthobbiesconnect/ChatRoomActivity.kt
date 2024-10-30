@@ -11,6 +11,7 @@ import com.example.finalprojecthobbiesconnect.databinding.ActivityChatRoomBindin
 import com.example.finalprojecthobbiesconnect.models.Message
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
+import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SoundManager
@@ -74,13 +75,15 @@ class ChatRoomActivity : AppCompatActivity() {
 
         loadAllMessages()
         initUserNameTextView()
+        initProfilePhotoImageViewChatRoom()
         initSendBTN()
         initBackBTN()
 
     }
 
-
-
+    private fun initProfilePhotoImageViewChatRoom() {
+        ImageLoader.getInstance().load(OtherUserManager.getInstance().getUser()!!.profilePhoto,binding.profilePhotoImageViewChatRoom)
+    }
 
 
     private fun initSendBTN() {
