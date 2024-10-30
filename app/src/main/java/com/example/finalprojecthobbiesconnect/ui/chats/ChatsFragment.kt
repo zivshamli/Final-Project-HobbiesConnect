@@ -80,7 +80,7 @@ class ChatsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                SignalManager.getInstance().vibrateAndToast("Failed to load chats details")
             }
         })
     }
