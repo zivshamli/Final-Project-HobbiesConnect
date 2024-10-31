@@ -146,7 +146,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
                 binding.recyclerViewMessages.scrollToPosition(messagesList.size - 1)
                 //THIS IS THE PART
-                if(!isFinishing&&!isDestroyed)
+                if(!isFinishing&&!isDestroyed) {
                     if (messagesList.isNotEmpty()) {
                         if (messagesList.last().senderEmail != MyActiveUserManager.getUser().email) {
                             soundManager.playSound(R.raw.received_message_sound)
@@ -154,7 +154,7 @@ class ChatRoomActivity : AppCompatActivity() {
                         }
 
                     }
-
+                }
             }
 
 
@@ -224,6 +224,12 @@ class ChatRoomActivity : AppCompatActivity() {
         soundManager.stopSound()
 
     }
+    override fun onPause() {
+        super.onPause()
+        soundManager.stopSound()
+    }
+
+
 
 
 

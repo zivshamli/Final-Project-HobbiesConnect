@@ -50,6 +50,8 @@
         android:background="@color/white"
         android:layout_centerInParent="true"
         android:textAlignment="center"
+        android:gravity="center"
+
         android:layout_marginTop="@dimen/open_top_margin"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="@dimen/open_hor_margin"
@@ -65,6 +67,7 @@
         android:background="@color/white"
         android:layout_centerInParent="true"
         android:textAlignment="center"
+        android:gravity="center"
         android:layout_marginTop="@dimen/open_top_margin"
         android:textColorHint="@color/black"
         android:layout_marginHorizontal="@dimen/open_hor_margin"

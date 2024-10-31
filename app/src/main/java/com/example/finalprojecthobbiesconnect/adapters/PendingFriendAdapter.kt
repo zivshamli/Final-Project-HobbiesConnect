@@ -111,15 +111,13 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     }
 
     private fun sendMessages(user: User, myUser: User, chatId:String) {
-        // Send a message to the user
-        // Create a new chat with the user
-        val messageMap: MutableMap<String,Message> = mutableMapOf()
-        // Add the chat to the user's chat list
 
-            myUser.chatList.add(chatId)
-            MyActiveUserManager.setUser(myUser)
-            // Add the chat to the other user's chat list
-            user.chatList.add(chatId)
+        val messageMap: MutableMap<String,Message> = mutableMapOf()
+
+        myUser.chatList.add(chatId)
+        MyActiveUserManager.setUser(myUser)
+        // Add the chat to the other user's chat list
+        user.chatList.add(chatId)
 
 
 

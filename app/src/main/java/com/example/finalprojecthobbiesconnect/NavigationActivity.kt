@@ -167,7 +167,7 @@ class NavigationActivity : AppCompatActivity() {
                 {
                     badgeReadChat.isVisible = chatRooms.isNotEmpty()
                     if (chatRooms.isNotEmpty()&&!isFinishing&&!isDestroyed) {
-                        soundManager.playSound(R.raw.chat_notification_sound)
+                        soundManager.playSound(R.raw.chat_notfication_sound)
                     }
                 }
             }
@@ -200,6 +200,10 @@ class NavigationActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
+        soundManager.stopSound()
+    }
+    override fun onPause() {
+        super.onPause()
         soundManager.stopSound()
     }
 }
