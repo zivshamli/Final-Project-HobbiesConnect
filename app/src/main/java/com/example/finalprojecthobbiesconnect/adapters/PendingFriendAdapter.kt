@@ -101,29 +101,27 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
         user.friendsList.add(MyActiveUserManager.getUser().email)
         addFriendListInFirebase(user,position)
         addFriendListInFirebaseToOtherUser(user)
-        sendMessages(user)
+        val chatId : String = generateChatId(MyActiveUserManager.getUser().email,user.email)
+        if(!MyActiveUserManager.getUser().chatList.contains(chatId)) {
 
+            sendMessages(user,MyActiveUserManager.getUser(),chatId)
+        }
 
 
     }
 
-    private fun sendMessages(user: User) {
+    private fun sendMessages(user: User,myUser: User,chatId:String) {
         // Send a message to the user
         // Create a new chat with the user
-        var messageMap: MutableMap<String,Message> = mutableMapOf()
-        val myUser = MyActiveUserManager.getUser()
+        val messageMap: MutableMap<String,Message> = mutableMapOf()
 
-        val chatId : String = generateChatId(myUser.email,user.email)
-        if(!MyActiveUserManager.getUser().chatList.contains(chatId)) {
             // Add the chat to the user's chat list
 
             myUser.chatList.add(chatId)
             MyActiveUserManager.setUser(myUser)
             // Add the chat to the other user's chat list
             user.chatList.add(chatId)
-        }else{
-            messageMap=loadChatMessages(chatId)
-        }
+
 
 
 
@@ -159,24 +157,14 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
 
     }
 
-    private fun loadChatMessages(chatId: String): MutableMap<String,Message> {
-        val database = FirebaseDatabase.getInstance()
-        val chatRef = database.getReference("chats").child(chatId)
-        var messageMap: MutableMap<String,Message> = mutableMapOf()
-        chatRef.get().addOnSuccessListener { dataSnapshot ->
-            val chat = dataSnapshot.getValue(Chats::class.java)
-            if (chat != null) {
-                messageMap = chat.messages.toSortedMap().toMutableMap()
-            }
-        }
-        return messageMap
 
 
 
 
 
 
-    }
+
+
 
 
     private fun addChatListInFirebaseUser(user: User) {

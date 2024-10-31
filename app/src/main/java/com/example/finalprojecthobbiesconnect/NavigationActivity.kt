@@ -12,6 +12,7 @@ import com.example.finalprojecthobbiesconnect.models.Chats
 import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
+import com.example.finalprojecthobbiesconnect.utilties.SoundManager
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DataSnapshot
@@ -25,6 +26,7 @@ class NavigationActivity : AppCompatActivity() {
     private lateinit var badgePendingNotification: BadgeDrawable
     private lateinit var badgeReadChat: BadgeDrawable
     private lateinit var navController: NavController
+    private  val soundManager: SoundManager = SoundManager(this)
 
      private  val database=   FirebaseDatabase.getInstance()
 
@@ -131,6 +133,10 @@ class NavigationActivity : AppCompatActivity() {
                     if (!readPend) {
                         if(::binding.isInitialized) {
                             badgePendingNotification.isVisible = true
+                            if(!isFinishing&&!isDestroyed) {
+                                soundManager.playSound(R.raw.notification_pending_friend_request_sound)
+                            }
+
                         }
 
                     }
@@ -160,6 +166,9 @@ class NavigationActivity : AppCompatActivity() {
                 if (::binding.isInitialized)
                 {
                     badgeReadChat.isVisible = chatRooms.isNotEmpty()
+                    if (chatRooms.isNotEmpty()&&!isFinishing&&!isDestroyed) {
+                        soundManager.playSound(R.raw.chat_notification_sound)
+                    }
                 }
             }
 
@@ -188,5 +197,9 @@ class NavigationActivity : AppCompatActivity() {
             }
         }
 
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        soundManager.stopSound()
     }
 }

@@ -30,9 +30,11 @@ class MessagesAdapter(private var messages: MutableList<Message>): RecyclerView.
 
             if (position > 0 && messages[position].date == messages[position - 1].date) {
                 binding.timeTextView.visibility = View.GONE
+                binding.viewSpace.visibility=View.GONE
             }
             else {
                 binding.timeTextView.visibility = View.VISIBLE
+                binding.viewSpace.visibility=View.VISIBLE
                 binding.timeTextView.text = messages[position].date
                 val todayDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
                 // Check if the date is today's date

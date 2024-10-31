@@ -154,7 +154,7 @@ class SignInActivity : AppCompatActivity() {
     private fun initYearSpinner() {
         val years = mutableListOf<String>()
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        for (i in 1921..currentYear) {
+        for (i in currentYear downTo currentYear-Constants.YEAR_DIFFER) {
             years.add(i.toString())
         }
 

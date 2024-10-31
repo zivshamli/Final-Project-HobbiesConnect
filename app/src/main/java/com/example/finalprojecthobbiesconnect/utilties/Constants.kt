@@ -9,6 +9,7 @@ class Constants {
         const val ALRET2 :String ="email missing!"
         const val ALRET3 :String ="password missing!"
         const val TODAYS_DATE :String ="Today"
+        const val  YEAR_DIFFER:Int =120
 
         const val UNKNOWN_USER :String ="Unknown User"
         const val PARTNER_NOT_FOUND :String ="partner not found"

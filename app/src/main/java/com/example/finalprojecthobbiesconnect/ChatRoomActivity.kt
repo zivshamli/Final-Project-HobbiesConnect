@@ -10,7 +10,6 @@ import com.example.finalprojecthobbiesconnect.adapters.MessagesAdapter
 import com.example.finalprojecthobbiesconnect.databinding.ActivityChatRoomBinding
 import com.example.finalprojecthobbiesconnect.models.Message
 import com.example.finalprojecthobbiesconnect.utilties.Constants
-import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.ImageLoader
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
 import com.example.finalprojecthobbiesconnect.utilties.OtherUserManager
@@ -38,7 +37,6 @@ class ChatRoomActivity : AppCompatActivity() {
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
         treatIntent()
-        FuncUtlis.setupUI(this, binding.root)
         connectToDatabase()
         initViews()
 
@@ -220,6 +218,13 @@ class ChatRoomActivity : AppCompatActivity() {
         binding.userNameTextView.text= OtherUserManager.getInstance().getUser()!!.username
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        soundManager.stopSound()
+
+    }
+
 
 
 }
