@@ -8,6 +8,7 @@ import com.example.finalprojecthobbiesconnect.utilties.Constants
 import com.example.finalprojecthobbiesconnect.utilties.FuncUtlis
 import com.example.finalprojecthobbiesconnect.utilties.SignalManager
 import com.example.finalprojecthobbiesconnect.utilties.MyActiveUserManager
+import com.example.finalprojecthobbiesconnect.utilties.SharedPreferencesManagerV3
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -29,12 +30,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViews()
         FuncUtlis.setupUI(this, findViewById(android.R.id.content))
+        checkPreferences()
         initViews()
 
     }
 
-
-
+    private fun checkPreferences() {
+        //check if user is logged in in the past and not logout
+        val userEmail =SharedPreferencesManagerV3.getInstance().getString(Constants.USERID_KEY,"")
+        if(userEmail!="") {
+            loadUserData(userEmail)
+            changeActivity()
+        }
+    }
 
 
     private fun findViews() {
@@ -101,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                         val userEmail = user!!.email!!.replace(".",",")
                          loadUserData(userEmail)
                         MyActiveUserManager.getUser().email=userEmail.replace(",",".")
+                        SharedPreferencesManagerV3.getInstance().putString(Constants.USERID_KEY,userEmail)
                         changeActivity()
                         SignalManager.getInstance().toast("Sign in successful!")
                     }
@@ -121,6 +130,8 @@ class MainActivity : AppCompatActivity() {
                 if (user != null) {
                     if(user.email==MyActiveUserManager.getUser().email||MyActiveUserManager.getUser().email=="") {
                         MyActiveUserManager.setUser(user)
+                        val app=applicationContext as App
+                        app.read_notification_flag=true
                     }
                 } else {
                     SignalManager.getInstance().vibrateAndToast("Failed to load user data")

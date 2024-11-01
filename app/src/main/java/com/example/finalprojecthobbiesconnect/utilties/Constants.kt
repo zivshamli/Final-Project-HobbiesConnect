@@ -11,6 +11,10 @@ class Constants {
         const val TODAYS_DATE :String ="Today"
         const val  YEAR_DIFFER:Int =120
 
+
+        const val DATA_KEY: String="SP_FILE"
+        const val USERID_KEY: String="USERID"
+
         const val UNKNOWN_USER :String ="Unknown User"
         const val PARTNER_NOT_FOUND :String ="partner not found"
 

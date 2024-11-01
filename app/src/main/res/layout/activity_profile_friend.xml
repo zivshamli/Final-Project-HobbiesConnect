@@ -122,6 +122,7 @@
                 android:textColor="@color/blue_800"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
+                android:layout_marginBottom="@dimen/profile_signout_BTN_bottom_margin"
                 android:layout_gravity="center"/>
 
 

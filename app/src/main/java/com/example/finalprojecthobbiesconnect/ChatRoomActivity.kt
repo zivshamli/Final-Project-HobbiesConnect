@@ -145,7 +145,7 @@ class ChatRoomActivity : AppCompatActivity() {
                 messageAdapter.notifyDataSetChanged()
 
                 binding.recyclerViewMessages.scrollToPosition(messagesList.size - 1)
-                //THIS IS THE PART
+                // for sounds in chat room
                 if(!isFinishing&&!isDestroyed) {
                     if (messagesList.isNotEmpty()) {
                         if (messagesList.last().senderEmail != MyActiveUserManager.getUser().email) {
@@ -153,6 +153,12 @@ class ChatRoomActivity : AppCompatActivity() {
                             updateMyUserStatus()
                         }
 
+                    }
+                }// for sounds in navigation activity
+                else{
+                    if (messagesList.last().senderEmail != MyActiveUserManager.getUser().email) {
+                        val app = applicationContext as App
+                        app.read_chat_flag = true
                     }
                 }
             }

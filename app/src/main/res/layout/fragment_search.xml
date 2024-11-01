@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey_300"
     tools:context=".ui.search.SearchFragment">
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -87,10 +87,10 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loading_animation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/loading_lottie_size"
+            android:layout_height="@dimen/loading_lottie_size"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/top_margin_search"
+            android:layout_marginTop="@dimen/search_top_margin_tv"
             android:visibility="gone"
             app:lottie_rawRes="@raw/loading_animation"
             app:lottie_autoPlay="true"
@@ -103,10 +103,25 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/top_margin_search"
             tools:listitem="@layout/horizontal_user_item"
-            android:visibility="visible"
+            android:visibility="gone"
             />
 
-    </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_users_found_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/search_top_margin_tv"
+            android:text="@string/no_users_found"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/grey_900"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 

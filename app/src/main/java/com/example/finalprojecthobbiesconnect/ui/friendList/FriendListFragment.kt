@@ -41,6 +41,7 @@ class FriendListFragment : Fragment() {
         _binding=FragmentFriendListBinding.inflate(inflater, container, false)
         val root: View = binding.root
         FuncUtlis.setupUI(requireActivity(), root)
+        initAnimation()
         initRecyclerView()
         loadFriends()
 
@@ -49,6 +50,10 @@ class FriendListFragment : Fragment() {
 
 
         return root
+    }
+
+    private fun initAnimation() {
+        binding.loadingAnimationFriendList.visibility=View.VISIBLE
     }
 
     private fun loadFriends() {
@@ -66,9 +71,12 @@ class FriendListFragment : Fragment() {
                     if(friends.isEmpty()){
                         it.friendListRV.visibility=View.GONE
                         it.noFriendsTV.visibility=View.VISIBLE
+                        it.loadingAnimationFriendList.visibility=View.GONE
+
                     }else{
                         it.friendListRV.visibility=View.VISIBLE
                         it.noFriendsTV.visibility=View.GONE
+                        it.loadingAnimationFriendList.visibility=View.GONE
                     }
 
                 }

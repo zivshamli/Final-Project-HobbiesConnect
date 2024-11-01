@@ -48,10 +48,16 @@ class SearchFragment : Fragment() {
         FuncUtlis.setupUI(requireActivity(), root)
         initAutoFillTextFieldViews()
         initRecyclerView()
+        initAnimationView()
+        searchUsersFromFirebase("", "", "", "")
         initSearchButton()
 
 
         return root
+    }
+
+    private fun initAnimationView() {
+        binding.loadingAnimation.visibility = View.VISIBLE
     }
 
     private fun initSearchButton() {
@@ -82,7 +88,7 @@ class SearchFragment : Fragment() {
                         }
                         // Filter users based on the provided criteria
                         ((hobbies.isEmpty() || hasMatchingHobby) &&
-                                (name.isEmpty() || user.username.contains(name, ignoreCase = true)) &&
+                                (name.isEmpty() || user.username.startsWith(name, ignoreCase = true)) &&
                                 (ageMin.isEmpty() || (LocalDate.now().year - user.birthyear) >= ageMin.toInt()) &&
                                 (ageMax.isEmpty() || (LocalDate.now().year - user.birthyear) <= ageMax.toInt())&&
                                         (user.email!= MyActiveUserManager.getUser().email))
@@ -91,7 +97,13 @@ class SearchFragment : Fragment() {
                 _binding?.let {
                     // Hide the loading animation and show the RecyclerView
                     it.loadingAnimation.visibility = View.GONE
-                    it.searchUserRV.visibility = View.VISIBLE
+                    if (filteredUsers.isEmpty()) {
+                       it.noUsersFoundTV.visibility = View.VISIBLE
+                    } else {
+                        it.searchUserRV.visibility = View.VISIBLE
+                        it.noUsersFoundTV.visibility = View.GONE
+
+                    }
                 }
                 // Update the RecyclerView with the filtered users
                 userAdapter.updateUsers(filteredUsers)

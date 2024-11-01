@@ -43,5 +43,6 @@
     <dimen name="padding_message">10dp</dimen>
     <dimen name="max_width_message">250dp</dimen>
     <dimen name="loading_lottie_size">50dp</dimen>
+    <dimen name="search_top_margin_tv">80dp</dimen>
 
 </resources>

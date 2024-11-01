@@ -75,6 +75,10 @@ dependencies {
     //Lottie:
     implementation (libs.lottie)
 
+    // Gson for SharedPreferences:
+    implementation (libs.gson)
+
+
 
 
 }

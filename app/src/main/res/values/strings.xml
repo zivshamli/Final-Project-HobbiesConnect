@@ -46,5 +46,6 @@
     <string name="you_don_t_have_friends_right_now">You Don\'t Have Friends Right Now</string>
     <string name="no_chats_right_now">No Chats Right Now</string>
     <string name="default_date">29/10/2024</string>
+    <string name="no_users_found">Users not found !</string>
 
 </resources>

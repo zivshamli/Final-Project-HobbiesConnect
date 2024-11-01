@@ -14,6 +14,21 @@
         android:background="@color/grey_300"
         tools:listitem="@layout/horizontal_user_item"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation_friend_list"
+        android:layout_width="@dimen/profile_photo_size"
+        android:layout_height="@dimen/profile_photo_size"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:lottie_rawRes="@raw/loading_animation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/no_friends_TV"
         android:layout_width="match_parent"

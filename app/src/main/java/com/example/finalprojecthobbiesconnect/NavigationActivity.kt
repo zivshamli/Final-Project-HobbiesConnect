@@ -133,8 +133,12 @@ class NavigationActivity : AppCompatActivity() {
                     if (!readPend) {
                         if(::binding.isInitialized) {
                             badgePendingNotification.isVisible = true
-                            if(!isFinishing&&!isDestroyed) {
+                            val app = applicationContext as App
+
+                            if(!isFinishing&&!isDestroyed&&app.read_notification_flag) {
                                 soundManager.playSound(R.raw.notification_pending_friend_request_sound)
+                                app.read_notification_flag=false
+
                             }
 
                         }
@@ -166,8 +170,11 @@ class NavigationActivity : AppCompatActivity() {
                 if (::binding.isInitialized)
                 {
                     badgeReadChat.isVisible = chatRooms.isNotEmpty()
-                    if (chatRooms.isNotEmpty()&&!isFinishing&&!isDestroyed) {
+                    val app = applicationContext as App
+                    if (chatRooms.isNotEmpty()&&!isFinishing&&!isDestroyed&&app.read_chat_flag) {
                         soundManager.playSound(R.raw.chat_notfication_sound)
+                        app.read_chat_flag=false
+
                     }
                 }
             }
