@@ -37,7 +37,7 @@
             android:layout_margin="@dimen/text_field_margin"
             />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="@dimen/search_field_width"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -71,17 +71,18 @@
                 android:layout_margin="@dimen/text_field_margin"
 
                 />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_search"
-            android:layout_marginTop="@dimen/search_button_top_margin"
+            android:layout_marginTop="@dimen/search_button_top_margin_small"
             android:backgroundTint="@color/blue_800"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_medium"
             android:layout_gravity="center"/>
 
 
@@ -101,7 +102,7 @@
             android:id="@+id/search_user_RV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/top_margin_search"
+            android:layout_marginTop="@dimen/search_button_top_margin_small"
             tools:listitem="@layout/horizontal_user_item"
             android:visibility="gone"
             />

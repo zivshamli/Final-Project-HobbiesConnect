@@ -223,6 +223,20 @@ class ChatRoomActivity : AppCompatActivity() {
 
         binding.userNameTextView.text= OtherUserManager.getInstance().getUser()!!.username
 
+        binding.userNameTextView.isClickable=(navigation!=Constants.PROFILE_ACTIVITY)
+        if (navigation!=Constants.PROFILE_ACTIVITY) {
+            binding.userNameTextView.setOnClickListener {
+                val intent = Intent(this, ProfileFriendActivity::class.java)
+                val b = Bundle()
+                b.putInt(Constants.NAVIGATION_KEY, Constants.CHAT_ROOM_ACTIVITY)
+                b.putInt(Constants.NAVIGATION_KEY2, Constants.CHATS_FRAGMENT)
+                intent.putExtras(b)
+                startActivity(intent)
+                finish()
+
+            }
+        }
+
     }
 
     override fun onDestroy() {

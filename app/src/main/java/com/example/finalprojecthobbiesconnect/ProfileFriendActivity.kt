@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener
 
 class ProfileFriendActivity : AppCompatActivity() {
     private var navigation:Int = 0
+    private var navigation2:Int = 0
     private lateinit var selectedHobbies: MutableList<String>
     private lateinit var binding: ActivityProfileFriendBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,8 @@ class ProfileFriendActivity : AppCompatActivity() {
 
     private fun treatIntent() {
         navigation=intent.getIntExtra(Constants.NAVIGATION_KEY,0)
+        navigation2=intent.getIntExtra(Constants.NAVIGATION_KEY2,0)
+
 
     }
 
@@ -173,7 +176,12 @@ class ProfileFriendActivity : AppCompatActivity() {
             binding.profileUserAddFriendBTN.text=getString(R.string.friends)
             binding.profileUserAddFriendBTN.backgroundTintList=ContextCompat.getColorStateList(this,R.color.white)
             binding.profileUserAddFriendBTN.setTextColor(ContextCompat.getColor(this,R.color.black))
-            binding.profileUserMessageBTN.visibility=View.VISIBLE
+            if(navigation!=Constants.CHAT_ROOM_ACTIVITY) {
+                binding.profileUserMessageBTN.visibility = View.VISIBLE
+            }
+            else{
+                binding.profileUserMessageBTN.visibility = View.GONE
+            }
             binding.profileUserAddFriendBTN.isClickable=true
         }
         else {
@@ -198,13 +206,22 @@ class ProfileFriendActivity : AppCompatActivity() {
     }
 
     private fun backToActivity(navigation: Int) {
-
-            val intent = Intent(this, NavigationActivity::class.java)
-            val b = Bundle()
-            b.putInt(Constants.NAVIGATION_KEY, navigation)
-            intent.putExtras(b)
-            startActivity(intent)
-            finish()
+            if(navigation!=Constants.CHAT_ROOM_ACTIVITY) {
+                val intent = Intent(this, NavigationActivity::class.java)
+                val b = Bundle()
+                b.putInt(Constants.NAVIGATION_KEY, navigation)
+                intent.putExtras(b)
+                startActivity(intent)
+                finish()
+            }
+            else{
+                val intent = Intent(this, ChatRoomActivity::class.java)
+                val b = Bundle()
+                b.putInt(Constants.NAVIGATION_KEY, navigation2)
+                intent.putExtras(b)
+                startActivity(intent)
+                finish()
+            }
 
 
     }

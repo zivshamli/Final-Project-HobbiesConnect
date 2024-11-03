@@ -2,10 +2,10 @@ package com.example.finalprojecthobbiesconnect.ui.friendList
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalprojecthobbiesconnect.ProfileFriendActivity
@@ -30,6 +30,7 @@ class FriendListFragment : Fragment() {
     private lateinit var friendListAdapter: SearchUserAdapter
     private val database=FirebaseDatabase.getInstance()
     private val userRef=database.getReference().child("users")
+    private var friendName:String=""
 
 
 
@@ -44,12 +45,20 @@ class FriendListFragment : Fragment() {
         initAnimation()
         initRecyclerView()
         loadFriends()
+        initSearchButton()
 
 
 
 
 
         return root
+    }
+
+    private fun initSearchButton() {
+        binding.searchButton.setOnClickListener {
+            friendName=binding.searchField.text.toString()
+            loadFriends()
+        }
     }
 
     private fun initAnimation() {
@@ -64,6 +73,8 @@ class FriendListFragment : Fragment() {
                 }
                     .filter { user->
                         MyActiveUserManager.getUser().friendsList.contains(user.email)
+                                &&
+                                (friendName.isEmpty() || user.username.startsWith(friendName, ignoreCase = true))
                     }
                 // update adapter
                 // if no friends show no friends textview
@@ -72,6 +83,13 @@ class FriendListFragment : Fragment() {
                         it.friendListRV.visibility=View.GONE
                         it.noFriendsTV.visibility=View.VISIBLE
                         it.loadingAnimationFriendList.visibility=View.GONE
+                        if(MyActiveUserManager.getUser().friendsList.isEmpty()) {
+                            it.noFriendsTV.text = Constants.NO_FRIENDS_TEXT
+                        }
+                        else{
+                            it.noFriendsTV.text=Constants.NO_FRIEND_FOUND_TEXT
+
+                            }
 
                     }else{
                         it.friendListRV.visibility=View.VISIBLE

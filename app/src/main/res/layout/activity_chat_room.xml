@@ -42,16 +42,17 @@
             android:layout_marginEnd="@dimen/chat_room_padding_linear_layout"/>
 
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userNameTextView"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/user_text_view_height"
             android:text="@string/user_name"
             android:textSize="@dimen/text_size"
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/white"
+            android:clickable="true"
             />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -71,7 +72,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="8dp"
+        android:padding="@dimen/chat_room_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +85,7 @@
             android:layout_weight="1"
             android:hint="@string/type_a_message"
             android:textColorHint="@color/black"
-            android:padding="8dp"
+            android:padding="@dimen/chat_room_padding"
             android:inputType="textMultiLine"
             android:maxLines="4"
             android:textColor="@color/black"

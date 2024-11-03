@@ -29,7 +29,7 @@
     <dimen name="search_user_top_margin_text">15dp</dimen>
     <dimen name="search_user_hor_margin_text">5dp</dimen>
     <dimen name="user_search_text_hobbies_size">15sp</dimen>
-    <dimen name="search_button_top_margin">16dp</dimen>
+    <dimen name="search_button_top_margin">10dp</dimen>
     <dimen name="text_field_margin">2dp</dimen>
     <dimen name="search_user_hobbies_text_top_margin">15dp</dimen>
     <dimen name="item_top_margin">5dp</dimen>
@@ -44,5 +44,10 @@
     <dimen name="max_width_message">250dp</dimen>
     <dimen name="loading_lottie_size">50dp</dimen>
     <dimen name="search_top_margin_tv">80dp</dimen>
+    <dimen name="chat_room_padding">8dp</dimen>
+    <dimen name="user_text_view_height">48dp</dimen>
+    <dimen name="text_field_search_name_padding">20dp</dimen>
+    <dimen name="constraint_padding_friend_list">16dp</dimen>
+    <dimen name="search_button_top_margin_small">4dp</dimen>
 
 </resources>

@@ -3,6 +3,8 @@ package com.example.finalprojecthobbiesconnect.utilties
 class Constants {
     companion object{
 
+        val NO_FRIENDS_TEXT: String="You Don\'t Have Friends Right Now"
+        val NO_FRIEND_FOUND_TEXT: String="No Friends Found"
         const val STARTER_DEFUALT_MASSEGE:String="Hello, I just accept your friend request"
         const val FRIENDREQUESTMESSAGE:String="sent you a friend request"
         const val ALRET1 :String ="email and password missing!"
@@ -28,6 +30,7 @@ class Constants {
         const val PROFILE_ACTIVITY  :Int=3
         const val FRIEND_LIST_FRAGMENT  :Int=4
         const val CHATS_FRAGMENT  :Int=5
+        const val CHAT_ROOM_ACTIVITY  :Int=6
         const val NAVIGATION_KEY:String="navigation"
         const val NAVIGATION_KEY2:String="navigation2"
 
