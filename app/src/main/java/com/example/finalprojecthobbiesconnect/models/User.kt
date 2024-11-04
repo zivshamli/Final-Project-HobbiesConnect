@@ -15,10 +15,14 @@ data class User(
 
 
 
-    )
+    ):Comparable<User>
 {
     fun getAge():Int
     {
         return LocalDate.now().year - birthyear
+    }
+
+    override fun compareTo(other: User): Int {
+        return this.username.compareTo(other.username)
     }
 }

@@ -46,7 +46,7 @@ class ChatRoomActivity : AppCompatActivity() {
     private fun connectToDatabase() {
          chatId=generateChatId(MyActiveUserManager.getUser().email,
             OtherUserManager.getInstance().getUser()!!.email)
-        messagesRef=database.getReference("chats").child(chatId).child("messages")
+        messagesRef=database.getReference(Constants.CHATS_REF).child(chatId).child(Constants.MESSAGES_REF)
 
     }
     private fun generateChatId(email: String, email1: String): String {
@@ -117,16 +117,16 @@ class ChatRoomActivity : AppCompatActivity() {
 
 
     private fun updateParticipateStatus() {
-        val chatRef=database.getReference("chats").child(chatId).child("participantsStatus")
+        val chatRef=database.getReference(Constants.CHATS_REF).child(chatId).child(Constants.PARTICIPANTS_STATUS_REF)
        val participateNewStatus= linkedMapOf(
            MyActiveUserManager.getUser().email.replace(".",",") to true,
            OtherUserManager.getInstance().getUser()!!.email.replace(".",",") to false
        )
         chatRef.setValue(participateNewStatus).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Log.d("ChatRoomActivity", "Participate status updated successfully")
+                Log.d(Constants.CHAT_ROOM_ACTIVITY_TAG, Constants.PARTICIPATE_STATUS_UPDATED_MESSAGE)
             } else {
-                Log.e("ChatRoomActivity", "Failed to update participate status: ${task.exception?.message}")
+                Log.e(Constants.CHAT_ROOM_ACTIVITY_TAG, "Failed to update participate status: ${task.exception?.message}")
             }
         }
     }
@@ -171,12 +171,12 @@ class ChatRoomActivity : AppCompatActivity() {
     }
 
     private fun updateMyUserStatus() {
-        val chatRef=database.getReference("chats").child(chatId).child("participantsStatus").child(MyActiveUserManager.getUser().email.replace(".",","))
+        val chatRef=database.getReference(Constants.CHATS_REF).child(chatId).child(Constants.PARTICIPANTS_STATUS_REF).child(MyActiveUserManager.getUser().email.replace(".",","))
         chatRef.setValue(true).addOnCompleteListener{ task ->
             if (task.isSuccessful) {
-                Log.d("ChatRoomActivity", "My user status updated successfully")
+                Log.d(Constants.CHAT_ROOM_ACTIVITY_TAG, Constants.PARTICIPATE_STATUS_UPDATED_MESSAGE)
             } else {
-                Log.e("ChatRoomActivity", "Failed to update my user status: ${task.exception?.message}")
+                Log.e(Constants.CHAT_ROOM_ACTIVITY_TAG, "Failed to update my user status: ${task.exception?.message}")
             }
         }
 

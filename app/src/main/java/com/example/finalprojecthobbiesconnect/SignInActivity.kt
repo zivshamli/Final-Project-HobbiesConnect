@@ -174,7 +174,7 @@ class SignInActivity : AppCompatActivity() {
                     )
                 )
                 chipBackgroundColor =
-                    ContextCompat.getColorStateList(context, android.R.color.white)  // רקע לבן
+                    ContextCompat.getColorStateList(context, android.R.color.white)  // white background
 
             }
 
@@ -183,10 +183,10 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-                if (isChecked && selectedHobbies.size >=5) {
+                if (isChecked && selectedHobbies.size >=Constants.HOBBIES_LIMIT) {
                     chip.isChecked = false
                     selectedHobbies.remove(chip.text.toString())
-                    SignalManager.getInstance().vibrateAndToast("You can't select more than 5 hobbies")
+                    SignalManager.getInstance().vibrateAndToast(Constants.HOBBIES_LIMIT_MESSAGE)
                 }
                 else if(isChecked){
                     chip.setTextColor(ContextCompat.getColor(this, android.R.color.white))
@@ -294,23 +294,23 @@ class SignInActivity : AppCompatActivity() {
         confirmPassword = confirmPasswordTextField.text.toString()
         selectedYear = yearPicker.selectedItem.toString().toInt()
         if(username=="") {
-            SignalManager.getInstance().vibrateAndToast("Please enter your name")
+            SignalManager.getInstance().vibrateAndToast(Constants.ENTER_NAME_MESSAGE)
             return false
         }
         if(email=="") {
-            SignalManager.getInstance().vibrateAndToast("Please enter your email")
+            SignalManager.getInstance().vibrateAndToast(Constants.ENTER_EMAIL_MESSAGE)
             return false
         }
         if(password=="") {
-            SignalManager.getInstance().vibrateAndToast("Please enter your password")
+            SignalManager.getInstance().vibrateAndToast(Constants.ENTER_PASSWORD_MESSAGE)
             return false
         }
         if(confirmPassword=="") {
-            SignalManager.getInstance().vibrateAndToast("Please confirm your password")
+            SignalManager.getInstance().vibrateAndToast(Constants.ENTER_CONFIRM_PASSWORD_MESSAGE)
             return false
         }
         if(password!=confirmPassword) {
-            SignalManager.getInstance().vibrateAndToast("Passwords don't match")
+            SignalManager.getInstance().vibrateAndToast(Constants.PASSWORD_MISMATCH_MESSAGE)
             return false
         }
         return true
@@ -341,7 +341,7 @@ class SignInActivity : AppCompatActivity() {
         val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
 
         if (parse == null) {
-            SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
+            SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER_PROFILE)
             return
         }
 
@@ -354,13 +354,13 @@ class SignInActivity : AppCompatActivity() {
             .addOnFailureListener {
                 saveBTN.visibility = View.VISIBLE
                 loadingSaveAnimation.visibility = View.GONE
-                SignalManager.getInstance().vibrateAndToast("Failed to upload profile image")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER_PROFILE)
             }
     }
 
     private fun saveUserDetailsToDatabase(userId: String, profilePhotoUrl: String) {
 
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+        val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF).child(userId)
 
         val user = User(
             username = username,
@@ -378,12 +378,13 @@ class SignInActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     MyActiveUserManager.setUser(user)
-                    SignalManager.getInstance().toast("User registered successfully")
+                    SignalManager.getInstance().toast(Constants.REGISTER_SUCCESSFUL)
                     loadingSaveAnimation.visibility = View.GONE
                     saveBTN.visibility = View.VISIBLE
                     changeActivity()
                 } else {
-                    SignalManager.getInstance().vibrateAndToast("Failed to save user details")
+                    SignalManager.getInstance().vibrateAndToast(Constants.ALERT_SAVE_USER
+                    )
                 }
             }
     }

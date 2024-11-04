@@ -60,7 +60,7 @@
         android:id="@+id/recyclerViewMessages"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/chats_room_rv_margin"
         app:layout_constraintTop_toBottomOf="@id/topBarLayout"
         app:layout_constraintBottom_toTopOf="@id/messageInputLayout"
         app:layout_constraintStart_toStartOf="parent"

@@ -29,7 +29,7 @@ class FriendListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var friendListAdapter: SearchUserAdapter
     private val database=FirebaseDatabase.getInstance()
-    private val userRef=database.getReference().child("users")
+    private val userRef=database.getReference().child(Constants.USERS_REF)
     private var friendName:String=""
 
 
@@ -92,6 +92,7 @@ class FriendListFragment : Fragment() {
                             }
 
                     }else{
+                        friends.sorted()
                         it.friendListRV.visibility=View.VISIBLE
                         it.noFriendsTV.visibility=View.GONE
                         it.loadingAnimationFriendList.visibility=View.GONE
@@ -104,7 +105,7 @@ class FriendListFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                SignalManager.getInstance().vibrateAndToast("Failed to load friends")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_FRIENDS)
             }
         })
 

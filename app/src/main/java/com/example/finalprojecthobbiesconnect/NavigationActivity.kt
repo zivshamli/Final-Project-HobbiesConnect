@@ -108,14 +108,14 @@ class NavigationActivity : AppCompatActivity() {
     private fun updateFireBaseReadStatus() {
         MyActiveUserManager.getUser().isReadPend=true
 
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(
-            MyActiveUserManager.getUser().email.replace(".",",")).child("readPend")
+        val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF).child(
+            MyActiveUserManager.getUser().email.replace(".",",")).child(Constants.READ_PENDING_REF)
 
         databaseRef.setValue(true).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 badgePendingNotification.isVisible = false
             } else {
-                SignalManager.getInstance().vibrateAndToast("Failed to save user details")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_SAVE_USER)
             }
 
 
@@ -124,8 +124,8 @@ class NavigationActivity : AppCompatActivity() {
 
 
      private fun listenForPendingStatus() {
-        val userRef =database.reference.child("users").child(
-            MyActiveUserManager.getUser().email.replace(".",",")).child("readPend")
+        val userRef =database.reference.child(Constants.USERS_REF).child(
+            MyActiveUserManager.getUser().email.replace(".",",")).child(Constants.READ_PENDING_REF)
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val readPend = snapshot.getValue(Boolean::class.java)
@@ -148,14 +148,14 @@ class NavigationActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                SignalManager.getInstance().vibrateAndToast("Failed to load user details")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER)
             }
         })
 
         }
 
     private fun listenForReadChat(){
-        val chatRef=database.getReference("chats")
+        val chatRef=database.getReference(Constants.CHATS_REF)
         chatRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val chatRooms = snapshot.children.mapNotNull {
@@ -184,7 +184,7 @@ class NavigationActivity : AppCompatActivity() {
 
 
             override fun onCancelled(error: DatabaseError) {
-               SignalManager.getInstance().vibrateAndToast("Failed to load chats details")
+               SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_CHATS)
             }
         })
     }

@@ -19,11 +19,11 @@ class SoundManager(private val context: Context) {
                 start()
 
 
-                Log.d("BackgroundSound", "Sound started")
+                Log.d(Constants.BACKGROUND_SOUND_TAG, "Sound started")
 
                 setOnCompletionListener {
 
-                    Log.d("BackgroundSound", "Sound completed")
+                    Log.d(Constants.BACKGROUND_SOUND_TAG, "Sound completed")
                     release()
                     mediaPlayer = null
                 }
@@ -36,7 +36,7 @@ class SoundManager(private val context: Context) {
             executor.execute {
                 if (it.isPlaying) {
                     it.stop()
-                    Log.d("BackgroundSound", "Sound stopped")
+                    Log.d(Constants.BACKGROUND_SOUND_TAG, "Sound stopped")
                 }
                 it.release()
                 mediaPlayer = null

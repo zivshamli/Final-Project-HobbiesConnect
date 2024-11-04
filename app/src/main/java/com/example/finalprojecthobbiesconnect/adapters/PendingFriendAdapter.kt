@@ -50,7 +50,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
                 binding.pendingUserDetails.text= buildString {
                    append( pendingFriends[position].username)
                     append(" ")
-                    append(Constants.FRIENDREQUESTMESSAGE)
+                    append(Constants.FRIEND_REQUEST_MESSAGE)
                 }
                 // Load the profile photo using ImageLoader
                 ImageLoader.getInstance().load(pendingFriends[position].profilePhoto,binding.pendingUserProfilePhoto,
@@ -78,8 +78,8 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     private fun removePendingFriendListInFirebase(user: User,position: Int) {
         // Remove the friend from the pending friend list in Firebase
         val database = FirebaseDatabase.getInstance()
-        val userRef = database.getReference("users").child(MyActiveUserManager.getUser().email.replace(".",","))
-        userRef.child("pendingFriendsList").setValue(MyActiveUserManager.getUser().pendingFriendsList)
+        val userRef = database.getReference(Constants.USERS_REF).child(MyActiveUserManager.getUser().email.replace(".",","))
+        userRef.child(Constants.PENDING_FRIENDS_LIST_REF).setValue(MyActiveUserManager.getUser().pendingFriendsList)
             .addOnSuccessListener {
                 // Handle success
                 pendingFriends.remove(user)
@@ -89,7 +89,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
             }
             .addOnFailureListener {
                 // Handle failure
-                SignalManager.getInstance().vibrateAndToast("Failed to remove friend from pending list")
+                SignalManager.getInstance().vibrateAndToast(Constants.FAILED_REMOVE_PENDING_FRIEND)
             }
 
     }
@@ -122,7 +122,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
 
 
 
-        val message =Message(MyActiveUserManager.getUser().email,Constants.STARTER_DEFUALT_MASSEGE)
+        val message =Message(MyActiveUserManager.getUser().email,Constants.STARTER_DEFAULT_MESSAGE)
         val participantsStatus = linkedMapOf(
             MyActiveUserManager.getUser().email.replace(".",",") to true,
             user.email.replace(".",",") to false)
@@ -134,7 +134,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
 
         // Add the chat to the Firebase database
         val database = FirebaseDatabase.getInstance()
-        val chatRef = database.getReference("chats").child(chatId)
+        val chatRef = database.getReference(Constants.CHATS_REF).child(chatId)
         chatRef.setValue(chat).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Handle success
@@ -167,12 +167,12 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     private fun addChatListInFirebaseUser(user: User) {
         // Add the chat to the user's chat list in Firebase
        val database = FirebaseDatabase.getInstance()
-        val userRef = database.getReference("users").child(user.email.replace(".",","))
+        val userRef = database.getReference(Constants.USERS_REF).child(user.email.replace(".",","))
         userRef.child("chatList").setValue(user.chatList).addOnCompleteListener{task ->
             if (task.isSuccessful) {
                 // Handle success
 
-                Log.d("PendingFriendAdapter", "Chat added to user's chat list in Firebase")
+                Log.d(Constants.PENDING_FRIEND_ADAPTER_TAG, "Chat added to user's chat list in Firebase")
             }
             else {
                 // Handle failure
@@ -181,6 +181,7 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
         }
 
     }
+    // Generate a unique chat ID based on the two user emails
 
     private fun generateChatId(email: String, email1: String): String {
         val email1replace = email1.replace(".",",")
@@ -197,11 +198,11 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     private fun addFriendListInFirebaseToOtherUser(user: User) {
         // Add the friend to the friends list in Firebase
         val database = FirebaseDatabase.getInstance()
-        val userRef = database.getReference("users").child(user.email.replace(".",","))
-        userRef.child("friendsList").setValue(user.friendsList)
+        val userRef = database.getReference(Constants.USERS_REF).child(user.email.replace(".",","))
+        userRef.child(Constants.FRIENDS_LIST_REF).setValue(user.friendsList)
             .addOnSuccessListener {
                 // Handle success
-                Log.d("PendingFriendAdapter", "Friend added to friends list in Firebase")
+                Log.d(Constants.PENDING_FRIEND_ADAPTER_TAG, "Friend added to friends list in Firebase")
             }
             .addOnFailureListener {
                 // Handle failure
@@ -214,10 +215,10 @@ class PendingFriendAdapter(private var pendingFriends: MutableList<User>) : Recy
     private fun addFriendListInFirebase(user: User, position: Int) {
         // Add the friend to the friends list in Firebase
         val database = FirebaseDatabase.getInstance()
-        val userRef = database.getReference("users").child(MyActiveUserManager.getUser().email.replace(".",","))
+        val userRef = database.getReference(Constants.USERS_REF).child(MyActiveUserManager.getUser().email.replace(".",","))
         val updates = hashMapOf<String, Any>(
-            "friendsList" to MyActiveUserManager.getUser().friendsList,
-            "pendingFriendsList" to MyActiveUserManager.getUser().pendingFriendsList
+            Constants.FRIENDS_LIST_REF to MyActiveUserManager.getUser().friendsList,
+            Constants.PENDING_FRIENDS_LIST_REF to MyActiveUserManager.getUser().pendingFriendsList
 
         )
         userRef.updateChildren(updates).addOnCompleteListener {task->

@@ -48,7 +48,7 @@
         android:id="@+id/upload_photo_BTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/upload_button_margin_top"
         android:backgroundTint="@color/blue_800"
         android:layout_above="@id/name_text_field"
         android:text="@string/upload_photo"
@@ -59,7 +59,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
           android:id="@+id/name_text_field"
-           android:layout_width="300dp"
+           android:layout_width="@dimen/sign_in_profile_text_field_width"
            android:layout_height="@dimen/text_field_height"
            android:hint="@string/name_hint"
            android:inputType="textPersonName"
@@ -75,7 +75,7 @@
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/sign_up_email_text_field"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/sign_in_profile_text_field_width"
         android:layout_height="@dimen/text_field_height"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
@@ -91,7 +91,7 @@
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/sign_up_password_text_field"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/sign_in_profile_text_field_width"
         android:layout_height="@dimen/text_field_height"
         android:hint="@string/password_field_hint"
         android:inputType="textPassword"
@@ -107,7 +107,7 @@
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/confirm_password_text_field"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/sign_in_profile_text_field_width"
         android:layout_height="@dimen/text_field_height"
         android:hint="@string/confirm_password_field_hint"
         android:inputType="textPassword"

@@ -21,7 +21,7 @@ class FuncUtlis {
                     partnerEmail = userEmail
             }
             val database= FirebaseDatabase.getInstance()
-            val userRef=database.getReference("users").child(partnerEmail)
+            val userRef=database.getReference(Constants.USERS_REF).child(partnerEmail)
             userRef.get().addOnSuccessListener { dataSnapshot ->
                 val partner = dataSnapshot.getValue(User::class.java)
                 onComplete(partner)

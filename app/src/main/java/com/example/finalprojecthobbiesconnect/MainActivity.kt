@@ -68,17 +68,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkTextFields():Boolean {
         if (emailTextField.text.toString().isEmpty() && passwordTextField.text.toString().isEmpty()) {
-            SignalManager.getInstance().vibrateAndToast(Constants.ALRET1)
+            SignalManager.getInstance().vibrateAndToast(Constants.ALERT1)
             return false
         }
 
         else if (emailTextField.text.toString().isEmpty() ) {
-            SignalManager.getInstance().vibrateAndToast(Constants.ALRET2)
+            SignalManager.getInstance().vibrateAndToast(Constants.ALERT2)
             return false
 
         }
         else if (passwordTextField.text.toString().isEmpty()) {
-            SignalManager.getInstance().vibrateAndToast(Constants.ALRET3)
+            SignalManager.getInstance().vibrateAndToast(Constants.ALERT3)
             return false
         }
         return true
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     if (task.result?.user == null) {
-                        SignalManager.getInstance().vibrateAndToast("User not found")
+                        SignalManager.getInstance().vibrateAndToast(Constants.ALERT_USER_NOT_FOUND)
 
                     }
                     else {
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                         MyActiveUserManager.getUser().email=userEmail.replace(",",".")
                         SharedPreferencesManagerV3.getInstance().putString(Constants.USERID_KEY,userEmail)
                         changeActivity()
-                        SignalManager.getInstance().toast("Sign in successful!")
+                        SignalManager.getInstance().toast(Constants.SIGN_IN_SUCCESSFUL)
                     }
                 } else {
                     SignalManager.getInstance().vibrateAndToast("Sign in failed: ${task.exception?.message}")
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadUserData(userEmail: String) {
         val database=FirebaseDatabase.getInstance()
 
-        val userRef=database.getReference("users").child(userEmail)
+        val userRef=database.getReference(Constants.USERS_REF).child(userEmail)
         userRef.addValueEventListener(object :ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -134,12 +134,12 @@ class MainActivity : AppCompatActivity() {
                         app.read_notification_flag=true
                     }
                 } else {
-                    SignalManager.getInstance().vibrateAndToast("Failed to load user data")
+                    SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                SignalManager.getInstance().vibrateAndToast("Failed to load user data")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER)
             }
         })
 

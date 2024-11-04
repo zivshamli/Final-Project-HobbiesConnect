@@ -30,7 +30,7 @@ class NotificationsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var pendingFriendAdapter: PendingFriendAdapter
-    private val databaseRef = FirebaseDatabase.getInstance().reference.child("users")
+    private val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF)
 
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class NotificationsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                SignalManager.getInstance().vibrateAndToast("Failed to load users")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USERS)
             }
         })
 

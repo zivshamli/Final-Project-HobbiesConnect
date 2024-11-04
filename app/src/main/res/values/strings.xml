@@ -15,10 +15,10 @@
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_profile">Profile</string>
+    <string name="title_notifications">My Notifications</string>
+    <string name="title_profile">My Profile</string>
     <string name="title_search">Search</string>
-    <string name="title_chats">Chats</string>
+    <string name="title_chats">My Chats</string>
     <string name="logout">Logout</string>
     <string name="max_age">Max age</string>
     <string name="min_age">Min age</string>

@@ -27,7 +27,7 @@ class ChatsFragment : Fragment() {
     private var _binding: FragmentChatsBinding? = null
     private lateinit var chatRoomsAdapter: ChatRoomsAdapter
     private val database = FirebaseDatabase.getInstance()
-    private val chatsRef = database.getReference("chats")
+    private val chatsRef = database.getReference(Constants.CHATS_REF)
 
 
 
@@ -80,7 +80,7 @@ class ChatsFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                SignalManager.getInstance().vibrateAndToast("Failed to load chats details")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_CHATS)
             }
         })
     }

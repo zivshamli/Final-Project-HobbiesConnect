@@ -30,7 +30,7 @@ import java.time.LocalDate
 
 class SearchFragment : Fragment() {
     private lateinit var userAdapter: SearchUserAdapter
-    private val databaseRef = FirebaseDatabase.getInstance().reference.child("users")
+    private val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF)
 
     private var _binding: FragmentSearchBinding? = null
 
@@ -100,6 +100,7 @@ class SearchFragment : Fragment() {
                     if (filteredUsers.isEmpty()) {
                        it.noUsersFoundTV.visibility = View.VISIBLE
                     } else {
+                        filteredUsers.sorted()
                         it.searchUserRV.visibility = View.VISIBLE
                         it.noUsersFoundTV.visibility = View.GONE
 
@@ -114,7 +115,7 @@ class SearchFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
                 // Handle the error
-                SignalManager.getInstance().vibrateAndToast("Failed to load users")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USERS)
 
             }
         })
@@ -155,7 +156,7 @@ class SearchFragment : Fragment() {
     private fun initAgeTextFieldAutoFill(searchAge: MultiAutoCompleteTextView) {
         val suggestion = mutableListOf<String>()
         val currentYear = LocalDate.now().year
-        for (i in 1900..currentYear) {
+        for (i in currentYear-Constants.YEAR_DIFFER..currentYear) {
             val age: Int = currentYear - i
             suggestion.add(age.toString())
         }

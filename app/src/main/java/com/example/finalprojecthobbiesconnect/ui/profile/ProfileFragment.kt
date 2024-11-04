@@ -27,6 +27,7 @@ import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import org.checkerframework.checker.units.qual.C
 
 class ProfileFragment : Fragment() {
 
@@ -110,7 +111,7 @@ class ProfileFragment : Fragment() {
                 FirebaseStorage.getInstance().reference.child("profile_images/${userId}.jpg")
 
             if (parse == null) {
-                SignalManager.getInstance().vibrateAndToast("Failed to upload profile image1")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER_PROFILE)
                 return
             }
 
@@ -123,41 +124,41 @@ class ProfileFragment : Fragment() {
                 }
                 .addOnFailureListener {
 
-                    SignalManager.getInstance().vibrateAndToast("Failed to upload profile image2")
+                    SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER_PROFILE)
 
                 }
         }
         else {
-            SignalManager.getInstance().toast("No profile photo changes ")
+            SignalManager.getInstance().toast(Constants.MESSAGE_NO_CHANGES_PHOTO)
         }
     }
 
     private fun saveUserChangePhotoToDatabase(userId: String, photoUrl: String) {
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+        val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF).child(userId)
 
         // Update profile photo in the database
-        databaseRef.child("profilePhoto").setValue(photoUrl)
+        databaseRef.child(Constants.PROFILE_PHOTO_REF).setValue(photoUrl)
             .addOnSuccessListener {
                 MyActiveUserManager.getUser().profilePhoto = photoUrl
-                SignalManager.getInstance().toast("Profile photo updated successfully")
+                SignalManager.getInstance().toast(Constants.MESSAGE_PHOTO_UPDATED)
             }
             .addOnFailureListener {
-                SignalManager.getInstance().vibrateAndToast("Failed to update profile photo3")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_LOAD_USER_PROFILE)
             }
 
     }
     private fun saveUserChangeHobbiesToDatabase(userId: String) {
-        val databaseRef = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+        val databaseRef = FirebaseDatabase.getInstance().reference.child(Constants.USERS_REF).child(userId)
 
         // Update hobbies in the database
-        databaseRef.child("hobbies").setValue(selectedHobbies)
+        databaseRef.child(Constants.HOBBIES_REF).setValue(selectedHobbies)
             .addOnSuccessListener {
                 MyActiveUserManager.getUser().hobbies = selectedHobbies
 
-                SignalManager.getInstance().toast("Hobbies updated successfully")
+                SignalManager.getInstance().toast(Constants.MESSAGE_HOBBIES_UPDATED)
             }
             .addOnFailureListener {
-                SignalManager.getInstance().vibrateAndToast("Failed to update hobbies")
+                SignalManager.getInstance().vibrateAndToast(Constants.ALERT_UPDATE_HOBBIES)
             }
     }
 
@@ -245,10 +246,10 @@ class ProfileFragment : Fragment() {
 
 
 
-                if (isChecked && selectedHobbies.size >=5) {
+                if (isChecked && selectedHobbies.size >=Constants.HOBBIES_LIMIT) {
                     chip.isChecked = false
                     selectedHobbies.remove(chip.text.toString())
-                    SignalManager.getInstance().vibrateAndToast("You can't select more than 5 hobbies")
+                    SignalManager.getInstance().vibrateAndToast(Constants.HOBBIES_LIMIT_MESSAGE)
                 }
                 else if(isChecked){
                     chip.setTextColor(ContextCompat.getColor(this.requireContext(), android.R.color.white))
