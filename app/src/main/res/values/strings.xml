@@ -49,5 +49,6 @@
     <string name="no_users_found">Users not found !</string>
     <string name="search_friends_by_name">Search friends by name</string>
     <string name="search">Search</string>
+    <string name="notifications_title_nav_button">Notifications</string>
 
 </resources>
