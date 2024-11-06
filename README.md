@@ -42,7 +42,7 @@ Once all information is filled out, users tap the **Save** button to complete re
 
 <div style="display: flex; justify-content: space-around;">
     <img src="https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2016.57.42_0a38e727.jpg" alt="Sign Up Screen - Step 1" width="300" height="500"/>
-    <img src="[https://github.com/zivshamli/photosForHobbiesConnect/blob/main/SignUpScreen2.jpg](https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2016.57.42_5364f3a3.jpg)" alt="Sign Up Screen - Step 2" width="300" height="500"/>
+    <img src="https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2016.57.42_5364f3a3.jpg" alt="Sign Up Screen - Step 2" width="300" height="500"/>
 </div>
 
 
