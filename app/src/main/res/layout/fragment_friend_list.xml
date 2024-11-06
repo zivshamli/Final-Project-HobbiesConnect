@@ -58,6 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_field_and_button"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/margin_bottom_rv2"
         tools:listitem="@layout/horizontal_user_item"/>
 
     <com.airbnb.lottie.LottieAnimationView

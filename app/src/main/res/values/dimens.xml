@@ -53,5 +53,7 @@
     <dimen name="upload_button_margin_top">5dp</dimen>
     <dimen name="sign_in_profile_text_field_width">300dp</dimen>
     <dimen name="view_height">10dp</dimen>
+    <dimen name="margin_bottom_rv">35dp</dimen>
+    <dimen name="margin_bottom_rv2">48dp</dimen>
 
 </resources>

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/notifications_RV"
+        android:layout_marginBottom="@dimen/margin_bottom_rv2"
         android:background="@color/grey_300"
         tools:listitem="@layout/horizontal_pending_request"/>
     <com.google.android.material.textview.MaterialTextView

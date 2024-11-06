@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/chats_room_RV"
         android:background="@color/grey_300"
+        android:layout_marginBottom="@dimen/margin_bottom_rv2"
         tools:listitem="@layout/horizontal_chat_room_item"/>
 
     <com.google.android.material.textview.MaterialTextView
