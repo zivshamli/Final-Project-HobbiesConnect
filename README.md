@@ -36,7 +36,7 @@ The sign-up screen in HobbiesConnect allows users to register with essential inf
 - **Select Birth Year**: Users specify their year of birth.
 - **Choose Hobbies**: Users select up to 5 hobbies. If more than five are selected, a toast message will appear, reminding them to choose only up to 5 hobbies. A summary list of chosen hobbies is also displayed.
 
-Once all information is filled out, users tap the **Save** button to complete registration. A loading indicator appears while the app saves the data and then transitions to the main navigation screen.
+Once all information is filled out, users tap the **Save** button to complete registration. A loading lottie appears while the app saves the data and then transitions to the main navigation screen.
 
 ### Sign Up Screen Preview
 
