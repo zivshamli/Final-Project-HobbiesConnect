@@ -45,6 +45,41 @@ Once all information is filled out, users tap the **Save** button to complete re
     <img src="https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2016.57.42_5364f3a3.jpg" alt="Sign Up Screen - Step 2" width="300" height="500"/>
 </div>
 
+## Navigation Screen
+
+The main navigation screen in HobbiesConnect provides users with quick access to all key features through a menu with five main sections:
+
+1. **Edit Profile**: Allows users to update their personal information, hobbies, and profile picture.
+2. **Friends List**: Displays the user’s list of friends, where they can view profiles and initiate chats.
+3. **User Search**: Users can search for other people based on hobbies, allowing them to connect with others who share similar interests.
+4. **Friend Requests**: Shows incoming friend requests, where users can accept or decline connections.
+5. **Chats List**: Displays ongoing chats with friends, enabling users to continue conversations from where they left off.
+
+### Navigation Screen Preview
+
+<div style="display: flex; justify-content: space-around;">
+    <img src="https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2017.51.23_889c9e29.jpg" alt="Navigation Screen" width="300" height="500"/>
+</div>
+
+
+## User Search Fragment
+
+The **User Search Fragment** in HobbiesConnect provides users with powerful search filters to find new friends based on shared hobbies, name, and age range. This feature allows users to easily connect with people who have similar interests and meet their specific preferences.
+
+### Search Filters
+- **Hobby-Based Search**: Users can filter results by selecting one or more hobbies. This enables users to find others with matching interests.
+- **Name Search**: Users can search for friends by entering a specific name, helping to locate individuals directly.
+- **Age Range Filter**: Users can set a minimum and maximum age to narrow down results to a particular age group, making it easier to connect with peers.
+
+Once search filters are set, the app displays a list of matching users, allowing easy access to profiles for viewing details and sending friend requests.
+
+### User Search Fragment Preview
+<div style="display: flex; justify-content: space-around;">
+    <img src="https://github.com/zivshamli/photosForHobbiesConnect/blob/main/%D7%AA%D7%9E%D7%95%D7%A0%D7%94%20%D7%A9%D7%9C%20WhatsApp%E2%80%8F%202024-11-06%20%D7%91%D7%A9%D7%A2%D7%94%2017.51.23_889c9e29.jpg" alt="Navigation Screen" width="300" height="500"/>
+</div>
+
+
+
 
 
 
