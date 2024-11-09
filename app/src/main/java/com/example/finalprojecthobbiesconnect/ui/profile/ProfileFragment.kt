@@ -27,7 +27,6 @@ import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import org.checkerframework.checker.units.qual.C
 
 class ProfileFragment : Fragment() {
 
